@@ -1,5 +1,7 @@
 node_modules/
 scratch/
+dist/
+public/
 .env*
 .DS_Store
 Thumbs.db
