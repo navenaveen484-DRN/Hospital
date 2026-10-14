@@ -1,0 +1,339 @@
+/* ==========================================================================
+   Healthcare Administrative Agent - Autonomous Execution Engine Styles
+   ========================================================================== */
+
+/* Agent Drawer / Modal */
+.agent-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(4, 7, 12, 0.75);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.25s ease;
+}
+
+.agent-drawer-overlay.active {
+  display: flex;
+}
+
+.agent-modal-card {
+  width: 100%;
+  max-width: 980px;
+  max-height: 90vh;
+  background: linear-gradient(160deg, #111827 0%, #0b0f19 100%);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(139, 92, 246, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.agent-modal-header {
+  padding: 1.25rem 1.75rem;
+  background: rgba(17, 24, 39, 0.9);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.agent-modal-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.agent-glow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: #c084fc;
+}
+
+/* Agent 5-Stage Stepper Pipeline */
+.agent-pipeline-container {
+  padding: 1.5rem 1.75rem;
+  background: rgba(13, 19, 31, 0.7);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.pipeline-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.85rem;
+  position: relative;
+}
+
+.step-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.step-card.active {
+  border-color: var(--teal-primary);
+  background: linear-gradient(145deg, rgba(6, 182, 212, 0.15), rgba(18, 26, 43, 0.8));
+  box-shadow: 0 0 20px var(--teal-glow);
+  transform: translateY(-2px);
+}
+
+.step-card.completed {
+  border-color: var(--emerald-success);
+  background: linear-gradient(145deg, rgba(16, 185, 129, 0.12), rgba(18, 26, 43, 0.8));
+}
+
+.step-card.waiting {
+  opacity: 0.55;
+}
+
+.step-number-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.step-icon-indicator {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-title {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+.step-status-text {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+/* Agent Terminal & Action View */
+.agent-workspace-body {
+  flex: 1;
+  padding: 1.5rem 1.75rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.agent-terminal-card {
+  background-color: var(--bg-terminal);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: #e2e8f0;
+  min-height: 200px;
+  max-height: 260px;
+  overflow-y: auto;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-line {
+  line-height: 1.7;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.line-prefix {
+  color: var(--teal-light);
+  user-select: none;
+  font-weight: 600;
+}
+
+.line-timestamp {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.line-content.highlight {
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.line-content.success {
+  color: #34d399;
+}
+
+.line-content.warning {
+  color: #fbbf24;
+}
+
+.line-content.entity {
+  background: rgba(139, 92, 246, 0.2);
+  color: #c084fc;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+/* Entity Pills & Extracted State Inspection */
+.agent-meta-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.15rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.meta-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.meta-field-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.meta-field-val {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* One-Click Scenario Presets */
+.preset-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.preset-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.preset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.65rem;
+}
+
+.preset-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  transition: all var(--transition-fast);
+  text-align: left;
+}
+
+.preset-card:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--purple-ai);
+  transform: translateY(-1px);
+}
+
+.preset-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(139, 92, 246, 0.2);
+  color: #c084fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.preset-text {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+.preset-card:hover .preset-text {
+  color: var(--text-main);
+}
+
+/* Agent Input Bar */
+.agent-input-container {
+  padding: 1.25rem 1.75rem;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.agent-prompt-input {
+  flex: 1;
+  background: var(--bg-base);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-pill);
+  padding: 0.75rem 1.4rem;
+  color: var(--text-main);
+  font-size: 0.9rem;
+  outline: none;
+  font-family: var(--font-body);
+  transition: all var(--transition-fast);
+}
+
+.agent-prompt-input:focus {
+  border-color: var(--purple-ai);
+  box-shadow: 0 0 16px var(--purple-ai-glow);
+}
+
+/* Pulse radar animation for active step */
+.radar-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(6, 182, 212, 0.3);
+  border-top-color: var(--teal-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .pipeline-steps {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "healthcare-administrative-agent",
+  "version": "1.0.0",
+  "description": "Enterprise Healthcare Administrative Agent Platform with Autonomous Execution Loop",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "healthcare",
+    "ai-agent",
+    "medical-management",
+    "autonomous-agent",
+    "clinical-admin"
+  ],
+  "author": "Antigravity AI",
+  "license": "MIT",
+  "devDependencies": {
+    "isomorphic-git": "^1.44.2"
+  }
+}

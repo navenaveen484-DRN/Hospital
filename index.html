@@ -1,0 +1,3365 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HospiCare | Hospital Management Platform</title>
+  <meta name="description"
+    content="HospiCare Enterprise Hospital Management Platform orchestrating clinical departments, patient charts, appointments, medical records, billing, rooms, and autonomous clinical administrative workflows.">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+
+  <!-- Core Design System & Components -->
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/agent.css">
+</head>
+
+<body>
+  <div id="app">
+    <!-- Mobile Sidebar Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="mainSidebar" aria-label="Main Navigation">
+      <!-- HospiCare Primary Brand Header (Desktop) -->
+      <div class="hospicare-brand-box">
+        <a href="#dashboard" class="hospicare-brand-link" title="HospiCare Dashboard">
+          <img src="assets/hospicare_logo.svg" alt="HospiCare Logo" class="hospicare-brand-logo-img" width="38" height="38">
+          <div class="hospicare-brand-text">
+            <span class="hospicare-brand-title" id="sidebarHospitalTitle">HospiCare</span>
+            <span class="hospicare-brand-subtitle">Hospital Admin</span>
+          </div>
+        </a>
+        <button class="hospicare-collapse-btn sidebar-collapse-btn" id="sidebarCollapseBtn" title="Toggle Sidebar (Ctrl+B)" aria-label="Toggle Sidebar">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6" class="sidebar-arrow"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Drawer Profile Header (Screenshot 2) -->
+      <div class="mobile-drawer-profile" id="mobileDrawerProfile">
+        <div class="mobile-drawer-avatar">A</div>
+        <div class="mobile-drawer-info">
+          <span class="mobile-drawer-name">Admin</span>
+          <span class="mobile-drawer-email">admin@hospital.com</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Hospital Management Modules">
+        <div class="nav-section">
+          <div class="nav-section-title">Hospital Management Core</div>
+          <a href="#dashboard" class="nav-item active" data-view="dashboard" id="nav-dashboard" data-tooltip="Executive Dashboard • Live">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Dashboard</span>
+            <span class="nav-badge" style="background:var(--emerald-success); color:#fff;">Live</span>
+          </a>
+          <a href="#patients" class="nav-item" data-view="patients" id="nav-patients" data-tooltip="Patients • 6 Active Charts">
+            <span class="nav-icon" style="color:var(--teal-primary);">
+              <svg viewBox="0 0 24 24">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Patients</span>
+            <span class="nav-badge" id="navBadgePatients">6 Active</span>
+          </a>
+          <a href="#doctors" class="nav-item" data-view="doctors" id="nav-doctors" data-tooltip="Doctors • 6 On Duty">
+            <span class="nav-icon" style="color:var(--purple-ai);">
+              <svg viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+                <line x1="12" y1="11" x2="12" y2="17" />
+                <line x1="9" y1="14" x2="15" y2="14" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Doctors</span>
+            <span class="nav-badge">6 On Duty</span>
+          </a>
+          <a href="#appointments" class="nav-item" data-view="appointments" id="nav-appointments" data-tooltip="Appointments • Auto-Fill">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Appointments</span>
+            <span class="nav-badge">Auto-Fill</span>
+          </a>
+          <a href="#departments" class="nav-item" data-view="departments" id="nav-departments" data-tooltip="Departments • 8 Clinical Units">
+            <span class="nav-icon" style="color:#6366f1;">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <path d="M9 3v18" />
+                <path d="M15 3v18" />
+                <path d="M3 9h18" />
+                <path d="M3 15h18" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Departments</span>
+            <span class="nav-badge" id="navBadgeDepartments">8 Units</span>
+          </a>
+          <a href="#medicalrecords" class="nav-item" data-view="medicalrecords" id="nav-medicalrecords" data-tooltip="Medical Records • EHR + OCR">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <polyline points="10 9 9 9 8 9" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Medical Records</span>
+            <span class="nav-badge">EHR + OCR</span>
+          </a>
+          <a href="#billing" class="nav-item" data-view="billing" id="nav-billing" data-tooltip="Billing & Claims • EDI 278">
+            <span class="nav-icon" style="color:var(--emerald-success);">
+              <svg viewBox="0 0 24 24">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                <line x1="1" y1="10" x2="23" y2="10" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Billing</span>
+            <span class="nav-badge">EDI 278</span>
+          </a>
+          <a href="#rooms" class="nav-item" data-view="rooms" id="nav-rooms" data-tooltip="Rooms & Beds • 12 Suites">
+            <span class="nav-icon" style="color:#f59e0b;">
+              <svg viewBox="0 0 24 24">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Rooms</span>
+            <span class="nav-badge" id="navBadgeRooms">12 Beds</span>
+          </a>
+          <a href="#staff" class="nav-item" data-view="staff" id="nav-staff" data-tooltip="Staff & Shifts • OT Alert">
+            <span class="nav-icon" style="color:var(--blue-info);">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Staff</span>
+            <span class="nav-badge urgent">OT Alert</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Clinical AI & Workflows</div>
+          <a href="#summaries" class="nav-item" data-view="summaries" id="nav-summaries" data-tooltip="Administrative Summaries • SOAP">
+            <span class="nav-icon" style="color:var(--teal-light);">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Administrative Summaries</span>
+            <span class="nav-badge">SOAP</span>
+          </a>
+          <a href="#coordination" class="nav-item" data-view="coordination" id="nav-coordination" data-tooltip="Workflow Coordination • Triage">
+            <span class="nav-icon" style="color:var(--rose-danger);">
+              <svg viewBox="0 0 24 24">
+                <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                <polyline points="2 17 12 22 22 17" />
+                <polyline points="2 12 12 17 22 12" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Workflow Coordination</span>
+            <span class="nav-badge urgent pulse">Triage</span>
+          </a>
+          <a href="#communication" class="nav-item" data-view="communication" id="nav-communication" data-tooltip="Patient Comms & SMS">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Patient Comms</span>
+          </a>
+          <a href="#reporting" class="nav-item" data-view="reporting" id="nav-reporting" data-tooltip="Executive Reporting & Audits">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24">
+                <line x1="18" y1="20" x2="18" y2="10" />
+                <line x1="12" y1="20" x2="12" y2="4" />
+                <line x1="6" y1="20" x2="6" y2="14" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Reporting & Audits</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Autonomous Core</div>
+          <a href="#agent" class="nav-item" data-view="agent" id="nav-agent" data-tooltip="Autonomous AI Agent • 5-Step Loop">
+            <span class="nav-icon" style="color:var(--purple-ai);">
+              <svg viewBox="0 0 24 24">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+              </svg>
+            </span>
+            <span class="nav-item-label" style="font-weight:700; color:var(--purple-ai);">AI Administrative Agent</span>
+            <span class="nav-badge" style="background:var(--purple-ai); color:#fff;">5 Steps</span>
+          </a>
+        </div>
+
+        <div class="nav-section nav-section-signout" style="margin-top:0.75rem; padding-top:0.75rem; border-top:1px solid var(--border-subtle);">
+          <a href="#signout" class="nav-item nav-item-signout" id="nav-signout" onclick="handleSignOut(event)" data-tooltip="Sign Out from HospiCare">
+            <span class="nav-icon" style="color:var(--rose-danger);">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+            </span>
+            <span class="nav-item-label" style="color:var(--rose-danger); font-weight:700;">Sign Out</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="agent-live-status-card" id="btnSidebarAgent" style="cursor:pointer;"
+          title="Click to open Autonomous Execution Visualizer">
+          <div class="agent-status-row">
+            <span class="status-indicator">
+              <span class="status-dot"></span>
+              <span class="status-indicator-label">Autonomous Loop</span>
+            </span>
+            <span class="badge badge-ai agent-badge-tag" style="font-size:0.65rem;">v3.4 Active</span>
+          </div>
+          <div class="agent-stats-mini">
+            <span>Actions Today: <strong id="agentTasksCountBadge">384</strong></span>
+            <span>Uptime: <strong>99.98%</strong></span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Body -->
+    <div class="main-wrapper">
+      <!-- Top Application Header -->
+      <header class="top-header" role="banner">
+        <div class="header-left">
+          <button class="sidebar-toggle-btn" id="sidebarToggleBtn" title="Toggle Sidebar (Ctrl+B)" aria-label="Toggle Sidebar">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+
+          <!-- Top Header Hospital Brand & Logo Badge -->
+          <div class="header-hospital-brand" onclick="openHospitalBrandModal()" title="Click to customize Hospital Colors & Logo">
+            <img src="assets/hospicare_logo.svg" alt="HospiCare Logo" class="header-logo-img" id="headerHospitalLogoImg">
+            <div class="header-hospital-text">
+              <span class="header-hospital-name" id="headerHospitalName">HospiCare</span>
+              <span class="header-hospital-sub">Main Pavilion • Operational</span>
+            </div>
+            <span class="clinic-live-dot" title="Live Telemetry Link Active"></span>
+          </div>
+
+          <div class="header-search">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input type="text" placeholder="Search patients, claims, MRN, physicians..." id="globalHeaderSearch">
+            <kbd class="search-kbd">Ctrl K</kbd>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Hospital Colors & Logo Customizer Button -->
+          <button class="header-btn header-btn-palette" id="btnHeaderBrandModal" onclick="openHospitalBrandModal()" title="Customize Hospital Colors & Logo">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 2a10 10 0 0 0 0 20v-5a5 5 0 0 0 0-10V2z" fill="currentColor" opacity="0.35"/>
+            </svg>
+            <span class="header-palette-dot" id="headerThemeDot" style="background:var(--hospital-primary, #2563eb);"></span>
+          </button>
+
+          <div class="safety-guardrail-pill" onclick="openScopeModal()"
+            title="Inspect Clinical Safety Guardrails & Product Scope Policy">
+            <span class="guardrail-dot"></span>
+            <span>Safety Guardrails: Active (Operational Only)</span>
+          </div>
+
+          <button class="btn-ai-trigger" id="btnOpenAgentModal"
+            title="Launch Autonomous Healthcare Agent Command Console">
+            <svg viewBox="0 0 24 24">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+            <span>AI Agent Command</span>
+          </button>
+
+          <button class="header-btn" id="themeToggleBtn" title="Toggle Light/Dark Theme">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+          </button>
+
+          <button class="header-btn" id="notificationsBtn" title="System Notifications">
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span class="btn-badge-dot"></span>
+          </button>
+
+          <div class="user-profile-badge" title="HospiCare Admin Desk (admin@hospital.com)">
+            <div class="avatar" style="width:34px; height:34px; background:#2563eb; color:#fff; font-weight:700;">A</div>
+            <div style="display:flex; flex-direction:column;">
+              <span style="font-weight:700; font-size:0.84rem; line-height:1.2;">Admin</span>
+              <span style="font-size:0.7rem; color:var(--text-muted); font-weight:500;">admin@hospital.com</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <main class="content-body" id="mainContentArea" role="main">
+
+        <!-- ============================================================= -->
+        <!-- VIEW: Executive Dashboard Overview (HospiCare Design) -->
+        <!-- ============================================================= -->
+        <section class="view-section active" id="view-dashboard" data-alias="overview"
+          aria-labelledby="overview-heading">
+          <div class="view-header" style="margin-bottom:1.25rem;">
+            <div class="view-header-title">
+              <h1 id="overview-heading" style="font-size:1.85rem; font-weight:800; letter-spacing:-0.03em; margin-bottom:0.25rem;">Dashboard</h1>
+              <p style="color:var(--text-secondary); font-size:0.9rem;">HospiCare Live Hospital Operations & Telemetry Overview</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-secondary" onclick="renderAllViews()">Refresh Data</button>
+              <button class="btn btn-ai" onclick="document.getElementById('btnOpenAgentModal').click()">
+                ⚡ Execute AI Agent Action
+              </button>
+            </div>
+          </div>
+
+          <!-- HospiCare Primary Hero Banner (as seen in screenshot) -->
+          <div class="hospicare-hero-banner" id="hospicareHeroBanner">
+            <div class="hospicare-hero-content">
+              <div class="hospicare-hero-icon" id="heroLogoIcon">
+                <img src="assets/hospicare_logo.svg" alt="HospiCare Logo" id="heroLogoImg" width="38" height="38" style="border-radius:10px;">
+              </div>
+              <div class="hospicare-hero-text">
+                <h2 class="hospicare-hero-title" id="hospicareHeroTitle">HospiCare</h2>
+                <span class="hospicare-hero-date" id="hospicareHeroDate">27/6/2026</span>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.65rem; flex-wrap:wrap;">
+              <button class="btn btn-sm" onclick="openHospitalBrandModal()" style="background:rgba(255,255,255,0.22); color:#fff; border:1px solid rgba(255,255,255,0.4); border-radius:9999px; padding:0.35rem 0.85rem; font-size:0.75rem; font-weight:700; cursor:pointer;" title="Change hospital colors and logo">
+                🎨 Change Colors & Logo
+              </button>
+              <div class="hospicare-hero-badge">
+                <span style="width:8px; height:8px; border-radius:50%; background:#10b981; display:inline-block;"></span>
+                <span>Live System Online</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- HospiCare 7 Metric Cards (Screenshot 1, 2, 3) -->
+          <div class="hospicare-stats-grid">
+            <!-- 1. Total Registered Patients -->
+            <div class="hospicare-stat-card" onclick="openMetricDetails('patients')" style="cursor:pointer;" title="Click to view all registered patient names one by one">
+              <div class="hospicare-card-top">
+                <div class="hospicare-card-icon hospicare-icon-blue">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <span class="hospicare-card-badge">Active records</span>
+              </div>
+              <div class="hospicare-card-body">
+                <div class="hospicare-card-value color-blue" id="hospicareTotalPatients">6</div>
+                <div class="hospicare-card-label">Total Registered Patients</div>
+                <div class="hospicare-card-action">View Names One by One →</div>
+              </div>
+            </div>
+
+            <!-- 2. Active Doctors -->
+            <div class="hospicare-stat-card" onclick="openMetricDetails('doctors')" style="cursor:pointer;" title="Click to view all active doctors one by one">
+              <div class="hospicare-card-top">
+                <div class="hospicare-card-icon hospicare-icon-green">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                    <line x1="12" y1="11" x2="12" y2="15"/>
+                    <line x1="10" y1="13" x2="14" y2="13"/>
+                  </svg>
+                </div>
+                <span class="hospicare-card-badge">On staff</span>
+              </div>
+              <div class="hospicare-card-body">
+                <div class="hospicare-card-value color-green" id="hospicareActiveDoctors">5</div>
+                <div class="hospicare-card-label">Active Doctors</div>
+                <div class="hospicare-card-action" style="color:#10b981;">View Doctors One by One →</div>
+              </div>
+            </div>
+
+            <!-- 3. Today's Appointments -->
+            <div class="hospicare-stat-card" onclick="openMetricDetails('appointments')" style="cursor:pointer;" title="Click to view all appointments one by one">
+              <div class="hospicare-card-top">
+                <div class="hospicare-card-icon hospicare-icon-orange">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                </div>
+                <span class="hospicare-card-badge">Scheduled</span>
+              </div>
+              <div class="hospicare-card-body">
+                <div class="hospicare-card-value color-orange" id="hospicareTodayAppointments">4</div>
+                <div class="hospicare-card-label">Today's Appointments</div>
+                <div class="hospicare-card-action" style="color:#f97316;">View Schedule One by One →</div>
+              </div>
+            </div>
+
+            <!-- 4. Pending Bills -->
+            <div class="hospicare-stat-card" onclick="openMetricDetails('bills')" style="cursor:pointer;" title="Click to view pending bills one by one">
+              <div class="hospicare-card-top">
+                <div class="hospicare-card-icon hospicare-icon-red">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="9" y1="15" x2="15" y2="15"/>
+                    <line x1="9" y1="11" x2="13" y2="11"/>
+                  </svg>
+                </div>
+                <span class="hospicare-card-badge">Unpaid</span>
+              </div>
+              <div class="hospicare-card-body">
+                <div class="hospicare-card-value color-red" id="hospicarePendingBills">3</div>
+                <div class="hospicare-card-label">Pending Bills</div>
+                <div class="hospicare-card-action" style="color:#ef4444;">View Unpaid Bills One by One →</div>
+              </div>
+            </div>
+
+            <!-- 5. Room Occupancy -->
+            <div class="hospicare-stat-card" onclick="openMetricDetails('rooms')" style="cursor:pointer;" title="Click to view all rooms and occupants one by one">
+              <div class="hospicare-card-top">
+                <div class="hospicare-card-icon hospicare-icon-purple">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 4v16"/>
+                    <path d="M2 8h18a2 2 0 0 1 2 2v10"/>
+                    <path d="M2 17h20"/>
+                    <path d="M6 8v9"/>
+                  </svg>
+                </div>
+                <span class="hospicare-card-badge" id="hospicareRoomOccupancyRate">58.3% occupied</span>
+              </div>
+              <div class="hospicare-card-body">
+                <div class="hospicare-card-value" id="hospicareRoomOccupancy">7/12</div>
+                <div class="hospicare-card-label">Room Occupancy</div>
+                <div class="hospicare-card-action" style="color:#8b5cf6;">View Rooms One by One →</div>
+              </div>
+            </div>
+
+            <!-- 6. Monthly Revenue -->
+            <div class="hospicare-stat-card" onclick="openMetricDetails('revenue')" style="cursor:pointer;" title="Click to view all revenue items one by one">
+              <div class="hospicare-card-top">
+                <div class="hospicare-card-icon hospicare-icon-cyan">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                    <polyline points="17 6 23 6 23 12"/>
+                  </svg>
+                </div>
+                <span class="hospicare-card-badge">This month</span>
+              </div>
+              <div class="hospicare-card-body">
+                <div class="hospicare-card-value color-cyan" id="hospicareMonthlyRevenue">$10,400</div>
+                <div class="hospicare-card-label">Monthly Revenue</div>
+                <div class="hospicare-card-action" style="color:#06b6d4;">View Revenue Items One by One →</div>
+              </div>
+            </div>
+
+            <!-- 7. Bed Occupancy (Bar item) -->
+            <div class="hospicare-stat-card hospicare-stat-bed-card" onclick="openMetricDetails('beds')" style="cursor:pointer;" title="Click to view bed allocations one by one">
+              <div class="hospicare-bed-row">
+                <div class="hospicare-bed-left">
+                  <div class="hospicare-card-icon hospicare-icon-purple" style="width:30px; height:30px;">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/>
+                    </svg>
+                  </div>
+                  <span class="hospicare-bed-label">Bed Occupancy</span>
+                </div>
+                <div class="hospicare-bed-percent" id="hospicareBedPercent">58%</div>
+              </div>
+              <div class="hospicare-progress-track">
+                <div class="hospicare-progress-bar" id="hospicareBedProgressBar" style="width:58%;"></div>
+              </div>
+              <div class="hospicare-card-action" style="color:#8b5cf6; margin-top:0.6rem;">Inspect Bed Allocations One by One →</div>
+            </div>
+          </div>
+
+          <!-- Core Management Modules Quick Hub -->
+          <div
+            style="display:grid; grid-template-columns:repeat(auto-fit, minmax(115px, 1fr)); gap:0.75rem; margin-bottom:1.5rem;">
+            <div class="card" onclick="openMetricDetails('patients')"
+              style="cursor:pointer; padding:0.85rem; text-align:center; transition:all 0.2s;" title="View all patients one by one">
+              <div style="font-size:1.4rem; margin-bottom:0.25rem;">👥</div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Patients</strong>
+              <span style="font-size:0.7rem; color:var(--teal-light);" id="hubBadgePatients">6 Charts</span>
+            </div>
+            <div class="card" onclick="openMetricDetails('doctors')"
+              style="cursor:pointer; padding:0.85rem; text-align:center; transition:all 0.2s;" title="View all doctors one by one">
+              <div style="font-size:1.4rem; margin-bottom:0.25rem;">🩺</div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Doctors</strong>
+              <span style="font-size:0.7rem; color:var(--purple-ai);" id="hubBadgeDoctors">5 On Duty</span>
+            </div>
+            <div class="card" onclick="openMetricDetails('appointments')"
+              style="cursor:pointer; padding:0.85rem; text-align:center; transition:all 0.2s;" title="View all appointments one by one">
+              <div style="font-size:1.4rem; margin-bottom:0.25rem;">📅</div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Appointments</strong>
+              <span style="font-size:0.7rem; color:var(--emerald-success);">Auto-Fill</span>
+            </div>
+            <div class="card" onclick="openMetricDetails('departments')"
+              style="cursor:pointer; padding:0.85rem; text-align:center; transition:all 0.2s;" title="View all departments one by one">
+              <div style="font-size:1.4rem; margin-bottom:0.25rem;">🏥</div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Departments</strong>
+              <span style="font-size:0.7rem; color:#6366f1;">8 Units</span>
+            </div>
+            <div class="card" onclick="openMetricDetails('records')"
+              style="cursor:pointer; padding:0.85rem; text-align:center; transition:all 0.2s;" title="View medical records one by one">
+              <div style="font-size:1.4rem; margin-bottom:0.25rem;">📂</div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Records</strong>
+              <span style="font-size:0.7rem; color:#38bdf8;">EHR & Faxes</span>
+            </div>
+            <div class="card" onclick="openMetricDetails('bills')"
+              style="cursor:pointer; padding:0.85rem; text-align:center; transition:all 0.2s;" title="View bills and claims one by one">
+              <div style="font-size:1.4rem; margin-bottom:0.25rem;">💳</div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Billing</strong>
+              <span style="font-size:0.7rem; color:var(--emerald-success);">EDI 278</span>
+            </div>
+            <div class="card" onclick="openMetricDetails('rooms')"
+              style="cursor:pointer; padding:0.85rem; text-align:center; transition:all 0.2s;" title="View suites and beds one by one">
+              <div style="font-size:1.4rem; margin-bottom:0.25rem;">🛏️</div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Rooms & Beds</strong>
+              <span style="font-size:0.7rem; color:#fbbf24;">12 Suites</span>
+            </div>
+            <div class="card" onclick="openMetricDetails('staff')"
+              style="cursor:pointer; padding:0.85rem; text-align:center; transition:all 0.2s;" title="View staff shifts one by one">
+              <div style="font-size:1.4rem; margin-bottom:0.25rem;">👩‍⚕️</div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Staff</strong>
+              <span style="font-size:0.7rem; color:var(--rose-danger);">OT Alert</span>
+            </div>
+            <div class="card" onclick="navigateToModule('agent')"
+              style="cursor:pointer; padding:0.85rem; text-align:center; transition:all 0.2s; background:linear-gradient(145deg, rgba(139,92,246,0.1), var(--bg-card));" title="Open AI Agent console">
+              <div style="font-size:1.4rem; margin-bottom:0.25rem;">🤖</div>
+              <strong style="font-size:0.82rem; color:var(--purple-ai); display:block;">AI Agent</strong>
+              <span style="font-size:0.7rem; color:var(--text-muted);">Autonomous</span>
+            </div>
+          </div>
+
+          <!-- Key Benefits Showcase Section -->
+          <div style="margin-top:1.5rem; margin-bottom:1.5rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <div>
+                <h2 style="font-size:1.3rem; display:flex; align-items:center; gap:0.6rem; color:var(--text-main);">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-success)"
+                    stroke-width="2.5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                  </svg>
+                  Autonomous Platform Key Benefits
+                </h2>
+                <p style="font-size:0.85rem; color:var(--text-secondary);">Direct clinical and financial outcomes
+                  delivered by the Healthcare Administrative Agent platform.</p>
+              </div>
+              <span class="badge badge-confirmed">Clinical Proof Benchmark</span>
+            </div>
+
+            <div class="benefits-showcase-grid">
+              <!-- Benefit 1 -->
+              <div class="benefit-card">
+                <div class="benefit-header">
+                  <div class="benefit-icon-badge">🩺</div>
+                  <span class="badge badge-ai">Direct Patient Care</span>
+                </div>
+                <h3 class="benefit-title">Reduces Administrative Burnout</h3>
+                <p class="benefit-desc">Takes over repetitive charting and paperwork, allowing doctors and nurses to
+                  focus on direct patient care.</p>
+                <div class="benefit-metrics-row">
+                  <div>
+                    <div class="benefit-metric-val">4.8 hrs</div>
+                    <div class="benefit-metric-label">Saved / Doctor / Day</div>
+                  </div>
+                  <div>
+                    <div class="benefit-metric-val">87.4%</div>
+                    <div class="benefit-metric-label">Charting Automated</div>
+                  </div>
+                </div>
+                <div class="benefit-quote">
+                  "The AI agent handles SOAP scribing, prior auth submissions, and routine charting before I even finish
+                  rounds." — Dr. Alistair Finch, MD
+                </div>
+              </div>
+
+              <!-- Benefit 2 -->
+              <div class="benefit-card">
+                <div class="benefit-header">
+                  <div class="benefit-icon-badge">⚡</div>
+                  <span class="badge badge-confirmed">Zero Waiting Room Lag</span>
+                </div>
+                <h3 class="benefit-title">Faster Patient Onboarding</h3>
+                <p class="benefit-desc">Speeds up insurance verification, intake paperwork, and registration before the
+                  patient enters the clinic.</p>
+                <div class="benefit-metrics-row">
+                  <div>
+                    <div class="benefit-metric-val">3.2 min</div>
+                    <div class="benefit-metric-label">Avg Intake vs 18m Std</div>
+                  </div>
+                  <div>
+                    <div class="benefit-metric-val">94.6%</div>
+                    <div class="benefit-metric-label">Pre-Arrival Completed</div>
+                  </div>
+                </div>
+                <div class="benefit-quote">
+                  "Patients arrive with their 270/271 insurance verified, questionnaires tagged into the EHR, and copays
+                  settled via SMS." — Intake Coordinator
+                </div>
+              </div>
+
+              <!-- Benefit 3 -->
+              <div class="benefit-card">
+                <div class="benefit-header">
+                  <div class="benefit-icon-badge">🛡️</div>
+                  <span class="badge badge-scheduled">Zero Loss Record Safety</span>
+                </div>
+                <h3 class="benefit-title">Improved Care Continuity</h3>
+                <p class="benefit-desc">Ensures patient records, lab summaries, and follow-up tasks are accurate and
+                  filed without delay.</p>
+                <div class="benefit-metrics-row">
+                  <div>
+                    <div class="benefit-metric-val">100%</div>
+                    <div class="benefit-metric-label">Chart Filing Compliance</div>
+                  </div>
+                  <div>
+                    <div class="benefit-metric-val">0.00%</div>
+                    <div class="benefit-metric-label">Lost Faxes / Referrals</div>
+                  </div>
+                </div>
+                <div class="benefit-quote">
+                  "Zero dropped referral faxes. Discharge plans are translated into plain English for patients, closing
+                  the loop on patient safety." — Chief Medical Officer
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Benefits Impact & ROI Calculator -->
+            <div class="calc-card">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                <h4 style="font-size:1.05rem; display:flex; align-items:center; gap:0.5rem; color:var(--text-main);">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--purple-ai)"
+                    stroke-width="2">
+                    <rect x="4" y="2" width="16" height="20" rx="2" />
+                    <line x1="8" y1="6" x2="16" y2="6" />
+                    <line x1="16" y1="14" x2="16" y2="18" />
+                    <path d="M16 10h.01" />
+                    <path d="M12 10h.01" />
+                    <path d="M8 10h.01" />
+                    <path d="M12 14h.01" />
+                    <path d="M8 14h.01" />
+                    <path d="M12 18h.01" />
+                    <path d="M8 18h.01" />
+                  </svg>
+                  Interactive Administrative Impact & Burnout Reduction Calculator
+                </h4>
+                <span class="badge badge-ai">Real-Time Algorithmic Model</span>
+              </div>
+
+              <div class="calc-grid">
+                <div>
+                  <div class="calc-slider-group">
+                    <div class="calc-slider-header">
+                      <span>Attending Physicians & Providers:</span>
+                      <strong id="calcValDoctors" style="color:var(--teal-light);">6 Physicians</strong>
+                    </div>
+                    <input type="range" min="1" max="25" value="6" id="calcRangeDoctors" class="calc-range-input"
+                      oninput="updateBenefitCalculator()">
+                  </div>
+
+                  <div class="calc-slider-group">
+                    <div class="calc-slider-header">
+                      <span>Average Daily Patients per Clinic:</span>
+                      <strong id="calcValPatients" style="color:var(--teal-light);">140 Patients/Day</strong>
+                    </div>
+                    <input type="range" min="20" max="300" step="10" value="140" id="calcRangePatients"
+                      class="calc-range-input" oninput="updateBenefitCalculator()">
+                  </div>
+
+                  <div class="calc-slider-group" style="margin-bottom:0;">
+                    <div class="calc-slider-header">
+                      <span>Minutes Spent on Charting/Paperwork per Visit:</span>
+                      <strong id="calcValMinutes" style="color:var(--teal-light);">18 min / patient</strong>
+                    </div>
+                    <input type="range" min="5" max="35" value="18" id="calcRangeMinutes" class="calc-range-input"
+                      oninput="updateBenefitCalculator()">
+                  </div>
+                </div>
+
+                <div class="calc-results-panel">
+                  <div class="calc-result-stat">
+                    <span class="calc-result-num" id="calcResHoursSaved">144 hrs</span>
+                    <span class="calc-result-sub">Clinical Hours Saved / Wk</span>
+                  </div>
+                  <div class="calc-result-stat">
+                    <span class="calc-result-num" id="calcResAnnualCost"
+                      style="color:var(--emerald-success);">$112,320</span>
+                    <span class="calc-result-sub">Annual Admin Value Protected</span>
+                  </div>
+                  <div class="calc-result-stat">
+                    <span class="calc-result-num" id="calcResBurnoutDrop" style="color:var(--teal-light);">-62%</span>
+                    <span class="calc-result-sub">Provider Burnout Index</span>
+                  </div>
+                  <div class="calc-result-stat">
+                    <span class="calc-result-num" id="calcResNoShowDrop" style="color:#fbbf24;">-74%</span>
+                    <span class="calc-result-sub">Waitlist Slot Recovery Rate</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 Core Responsibilities Showcase Cards -->
+          <div style="margin-bottom:1.5rem;">
+            <h3 style="margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; color:var(--text-main);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal-primary)" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+              </svg>
+              Core Responsibilities of the Administrative Agent Platform
+            </h3>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
+              <!-- Core 1 -->
+              <div class="card" onclick="navigateToModule('appointments')"
+                style="cursor:pointer; border-left:3px solid var(--teal-primary);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                  <span class="badge badge-scheduled">Core Responsibility 1</span>
+                  <span style="font-size:0.75rem; color:var(--teal-light);">Open Module →</span>
+                </div>
+                <h4>Appointment Scheduling & Management</h4>
+                <p style="font-size:0.8rem; margin-top:0.4rem; color:var(--text-secondary); line-height:1.45;">
+                  • Books, reschedules, and cancels patient appointments across clinic calendars.<br>
+                  • Sends automated reminders via SMS or email to reduce no-shows.<br>
+                  • <strong>Manages waitlists and fills sudden cancellations automatically.</strong>
+                </p>
+              </div>
+
+              <!-- Core 2 -->
+              <div class="card" onclick="navigateToModule('medicalrecords')"
+                style="cursor:pointer; border-left:3px solid var(--purple-ai);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                  <span class="badge badge-ai">Core Responsibility 2</span>
+                  <span style="font-size:0.75rem; color:var(--teal-light);">Open Module →</span>
+                </div>
+                <h4>Document & Data Organization</h4>
+                <p style="font-size:0.8rem; margin-top:0.4rem; color:var(--text-secondary); line-height:1.45;">
+                  • Digitizes, tags, and files medical documents, lab results, and referral letters.<br>
+                  • Updates Electronic Health Records (EHR) with patient intake forms and insurance details.<br>
+                  • <strong>Categorizes incoming faxes and records into the correct patient charts.</strong>
+                </p>
+              </div>
+
+              <!-- Core 3 -->
+              <div class="card" onclick="navigateToModule('summaries')"
+                style="cursor:pointer; border-left:3px solid var(--emerald-success);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                  <span class="badge badge-confirmed">Core Responsibility 3</span>
+                  <span style="font-size:0.75rem; color:var(--teal-light);">Open Module →</span>
+                </div>
+                <h4>Administrative Summaries</h4>
+                <p style="font-size:0.8rem; margin-top:0.4rem; color:var(--text-secondary); line-height:1.45;">
+                  • Transcribes or summarizes patient visit notes (clinical scribing) for physician review.<br>
+                  • Generates brief, plain-language summaries of complex discharge instructions or treatment plans for
+                  patients.<br>
+                  • <strong>Prepares daily shift handoff summaries for nursing and administrative staff.</strong>
+                </p>
+              </div>
+
+              <!-- Core 4 -->
+              <div class="card" onclick="navigateToModule('coordination')"
+                style="cursor:pointer; border-left:3px solid var(--rose-danger);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                  <span class="badge badge-urgent">Core Responsibility 4</span>
+                  <span style="font-size:0.75rem; color:var(--teal-light);">Open Module →</span>
+                </div>
+                <h4>Workflow & Task Coordination</h4>
+                <p style="font-size:0.8rem; margin-top:0.4rem; color:var(--text-secondary); line-height:1.45;">
+                  • Coordinates prior authorization requests with insurance companies.<br>
+                  • Routes internal tasks (e.g., prescription refill requests, lab orders) to the appropriate team
+                  members.<br>
+                  • <strong>Monitors intake queues to ensure urgent patient communications are flagged
+                    immediately.</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============================================================= -->
+          <!-- Product Scope & Clinical Safety Guardrails Matrix -->
+          <!-- ============================================================= -->
+          <div class="scope-guardrails-container" id="scopeGuardrailsSection">
+            <div class="scope-header-row">
+              <div>
+                <h3
+                  style="font-size:1.25rem; display:flex; align-items:center; gap:0.6rem; color:var(--text-main); margin-bottom:0.35rem;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-success)"
+                    stroke-width="2.2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                  Product Scope & Clinical Safety Guardrails
+                </h3>
+                <p style="font-size:0.85rem; color:var(--text-secondary); line-height:1.45;">
+                  Hard architectural demarcation: High-impact administrative automation is fully approved, while
+                  clinical diagnosis, treatment recommendations, and medication decisions are strictly prohibited.
+                </p>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+                <button class="btn btn-sm btn-secondary" onclick="simulateSafetyGuardrailTest()"
+                  title="Trigger autonomous clinical action intercept demo">
+                  🛡️ Test Guardrail Intercept Demo
+                </button>
+                <button class="btn btn-sm btn-outline" onclick="openScopeModal()"
+                  style="border:1px solid var(--border-medium); color:var(--teal-light); background:var(--bg-card); padding:0.4rem 0.8rem; border-radius:var(--radius-sm); font-size:0.78rem; cursor:pointer;">
+                  Inspect Policy Spec ↗
+                </button>
+              </div>
+            </div>
+
+            <div class="scope-matrix-grid">
+              <!-- Approved Scope Column -->
+              <div class="scope-card-approved">
+                <div class="scope-card-header">
+                  <div class="scope-card-title">
+                    <span class="scope-icon-check">✓</span>
+                    GOOD INITIAL SCOPE
+                  </div>
+                  <div class="scope-card-subtitle">Approved Administrative & Operational Core (High ROI, Zero Clinical
+                    Liability)</div>
+                </div>
+
+                <div class="scope-list">
+                  <div class="scope-item">
+                    <span class="scope-icon-check">✓</span>
+                    <div class="scope-item-content">
+                      <div class="scope-item-title">
+                        <span>Scheduling</span>
+                        <span class="scope-tag-approved">Autonomous & Assisted</span>
+                      </div>
+                      <div class="scope-item-desc">Books, reschedules, and cancels patient appointments across clinic
+                        calendars with room clash protection.</div>
+                    </div>
+                  </div>
+
+                  <div class="scope-item">
+                    <span class="scope-icon-check">✓</span>
+                    <div class="scope-item-content">
+                      <div class="scope-item-title">
+                        <span>Reminders</span>
+                        <span class="scope-tag-approved">Multi-Channel</span>
+                      </div>
+                      <div class="scope-item-desc">Sends automated reminders via SMS or email to reduce no-shows and
+                        prepare patients for fasting protocols.</div>
+                    </div>
+                  </div>
+
+                  <div class="scope-item">
+                    <span class="scope-icon-check">✓</span>
+                    <div class="scope-item-content">
+                      <div class="scope-item-title">
+                        <span>Administrative documents</span>
+                        <span class="scope-tag-approved">Deterministic OCR</span>
+                      </div>
+                      <div class="scope-item-desc">Digitizes, tags, and files medical documents, lab results, and
+                        referral letters into secure encrypted storage.</div>
+                    </div>
+                  </div>
+
+                  <div class="scope-item">
+                    <span class="scope-icon-check">✓</span>
+                    <div class="scope-item-content">
+                      <div class="scope-item-title">
+                        <span>Staff workflows</span>
+                        <span class="scope-tag-approved">Workforce Intelligence</span>
+                      </div>
+                      <div class="scope-item-desc">Prepares shift handoffs, monitors overtime hours, and dynamically
+                        balances nurse-to-patient acuity coverage.</div>
+                    </div>
+                  </div>
+
+                  <div class="scope-item">
+                    <span class="scope-icon-check">✓</span>
+                    <div class="scope-item-content">
+                      <div class="scope-item-title">
+                        <span>Reports</span>
+                        <span class="scope-tag-approved">Deterministic Analytics</span>
+                      </div>
+                      <div class="scope-item-desc">Generates operational summaries, first-pass claims yield analytics,
+                        and immutable cryptographic audit trails.</div>
+                    </div>
+                  </div>
+
+                  <div class="scope-item">
+                    <span class="scope-icon-check">✓</span>
+                    <div class="scope-item-content">
+                      <div class="scope-item-title">
+                        <span>Appointment coordination</span>
+                        <span class="scope-tag-approved">Auto-Recovery Engine</span>
+                      </div>
+                      <div class="scope-item-desc">Manages waitlists and fills sudden cancellations automatically by
+                        matching top standby patient acuity.</div>
+                    </div>
+                  </div>
+
+                  <div class="scope-item">
+                    <span class="scope-icon-check">✓</span>
+                    <div class="scope-item-content">
+                      <div class="scope-item-title">
+                        <span>Administrative communication</span>
+                        <span class="scope-tag-approved">Standardized Messaging</span>
+                      </div>
+                      <div class="scope-item-desc">Delivers intake questionnaires, appointment notices, and clinic
+                        policy updates via secure patient portals.</div>
+                    </div>
+                  </div>
+
+                  <div class="scope-item">
+                    <span class="scope-icon-check">✓</span>
+                    <div class="scope-item-content">
+                      <div class="scope-item-title">
+                        <span>Data organization</span>
+                        <span class="scope-tag-approved">EHR Synchronization</span>
+                      </div>
+                      <div class="scope-item-desc">Updates Electronic Health Records (EHR) with intake forms and
+                        categorizes incoming faxes into patient charts.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Restricted Scope Column -->
+              <div class="scope-card-restricted">
+                <div class="scope-card-header">
+                  <div class="scope-card-title">
+                    <span class="scope-icon-cross">✗</span>
+                    AVOID AS YOUR FIRST PRODUCT
+                  </div>
+                  <div class="scope-card-subtitle">Hard Clinical Safety Boundaries Active (Zero Clinical Autonomy &
+                    Liability Protection)</div>
+                </div>
+
+                <div class="scope-list">
+                  <!-- Prohibited 1 -->
+                  <div class="scope-item">
+                    <span class="scope-icon-cross">✗</span>
+                    <div class="scope-item-content">
+                      <div class="scope-item-title">
+                        <span>Autonomous diagnosis</span>
+                        <span class="scope-tag-prohibited">Strictly Prohibited</span>
+                      </div>
+                      <div class="scope-item-desc">AI attempting to diagnose pathology, disease, or medical conditions
+                        from patient symptoms or diagnostic labs.</div>
+                      <div class="scope-item-policy"><strong>Safety Guardrail:</strong> Inflow symptom queries trigger
+                        urgent human nurse/physician triage alert only; agent provides zero diagnostic opinion.</div>
+                    </div>
+                  </div>
+
+                  <!-- Prohibited 2 -->
+                  <div class="scope-item">
+                    <span class="scope-icon-cross">✗</span>
+                    <div class="scope-item-content">
+                      <div class="scope-item-title">
+                        <span>Treatment recommendations</span>
+                        <span class="scope-tag-prohibited">Strictly Prohibited</span>
+                      </div>
+                      <div class="scope-item-desc">AI prescribing clinical therapies, recommending surgical
+                        interventions, or designing clinical protocols.</div>
+                      <div class="scope-item-policy"><strong>Safety Guardrail:</strong> Clinical Scribe generates draft
+                        transcription only; requiring licensed physician review, revision, and electronic signature.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Prohibited 3 -->
+                  <div class="scope-item">
+                    <span class="scope-icon-cross">✗</span>
+                    <div class="scope-item-content">
+                      <div class="scope-item-title">
+                        <span>Medication decisions</span>
+                        <span class="scope-tag-prohibited">Strictly Prohibited</span>
+                      </div>
+                      <div class="scope-item-desc">AI adjusting drug dosages, approving refills, substituting
+                        pharmaceuticals, or determining medication regimens.</div>
+                      <div class="scope-item-policy"><strong>Safety Guardrail:</strong> Refill requests are packaged as
+                        clerical routing tasks requiring licensed physician / pharmacist authorization.</div>
+                    </div>
+                  </div>
+
+                  <!-- Prohibited 4 -->
+                  <div class="scope-item">
+                    <span class="scope-icon-cross">✗</span>
+                    <div class="scope-item-content">
+                      <div class="scope-item-title">
+                        <span>Autonomous clinical decisions</span>
+                        <span class="scope-tag-prohibited">Strictly Prohibited</span>
+                      </div>
+                      <div class="scope-item-desc">AI making independent clinical determinations or committing medical
+                        actions without human clinical supervision.</div>
+                      <div class="scope-item-policy"><strong>Safety Guardrail:</strong> 100% Human-in-the-Loop (HITL)
+                        mandatory sign-off enforced on all clinical chart filings and orders.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- CORE MODULE: Patients Directory & Electronic Health Charts -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-patients" aria-labelledby="patients-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="patients-heading">Patients Directory & Clinical Charts</h1>
+              <p>Comprehensive patient index with demographic profiles, insurance coverage, room allocation, active
+                conditions, and vitals.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-secondary" onclick="renderPatients()">Refresh Directory</button>
+              <button class="btn btn-primary" onclick="openNewPatientModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Register New Patient
+              </button>
+            </div>
+          </div>
+
+          <!-- Patients Stats Overview -->
+          <div class="stats-grid"
+            style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 1.5rem;">
+            <div class="stat-card" onclick="openMetricDetails('patients')" style="--stat-color:var(--teal-primary); --stat-glow:var(--teal-glow); cursor:pointer;" title="Click to view all registered patient names one by one">
+              <div class="stat-header">
+                <span class="stat-label">Total Registered</span>
+                <div class="stat-icon">👥</div>
+              </div>
+              <div class="stat-value" id="statTotalPatients">1,248</div>
+              <div class="stat-meta"><span class="trend-up">↑ 6 today</span> active chart records • <strong style="color:var(--teal-light);">View Names →</strong></div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('patients')" style="--stat-color:var(--emerald-success); --stat-glow:var(--emerald-glow); cursor:pointer;" title="Click to view admitted patient names one by one">
+              <div class="stat-header">
+                <span class="stat-label">Admitted / In Clinic</span>
+                <div class="stat-icon">🏥</div>
+              </div>
+              <div class="stat-value" id="statAdmittedPatients">3 Patients</div>
+              <div class="stat-meta"><span class="stat-subtext">Telemetry & procedure beds • <strong>View Names →</strong></span></div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('bills')" style="--stat-color:var(--purple-ai); --stat-glow:var(--purple-ai-glow); cursor:pointer;" title="Click to view verified claims and patients">
+              <div class="stat-header">
+                <span class="stat-label">Insurance Verified</span>
+                <div class="stat-icon">🛡️</div>
+              </div>
+              <div class="stat-value">100%</div>
+              <div class="stat-meta"><span class="trend-up">EDI 270/271</span> clean eligibility • <strong>View Claims →</strong></div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('patients')" style="--stat-color:var(--rose-danger); --stat-glow:var(--rose-glow); cursor:pointer;" title="Click to view high-acuity priority patients">
+              <div class="stat-header">
+                <span class="stat-label">High-Acuity Triage</span>
+                <div class="stat-icon">🚨</div>
+              </div>
+              <div class="stat-value" style="color:var(--rose-danger);">1 Priority</div>
+              <div class="stat-meta"><span class="stat-subtext">Immediate care watch • <strong>View Names →</strong></span></div>
+            </div>
+          </div>
+
+          <!-- Patient Search & Filter Bar -->
+          <div class="filter-bar">
+            <div class="filter-group" style="flex:1;">
+              <input type="text" id="patientSearchInput" class="form-control"
+                placeholder="Search patient by name, MRN, phone, insurance, or condition..."
+                oninput="filterPatientsList()" style="width:100%;">
+            </div>
+            <div class="filter-group">
+              <label for="filterPatientStatus"
+                style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Status:</label>
+              <select id="filterPatientStatus" class="select-filter" onchange="filterPatientsList()">
+                <option value="ALL">All Patient Statuses</option>
+                <option value="Admitted">Admitted (Inpatient)</option>
+                <option value="Outpatient">Outpatient</option>
+                <option value="In Treatment">In Treatment / Infusion</option>
+                <option value="Scheduled Surgery">Scheduled Surgery</option>
+                <option value="Stat ER Observation">Stat ER Observation</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Patients Cards Grid -->
+          <div class="patients-grid" id="patientsContainer">
+            <!-- Rendered dynamically via JS -->
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- CORE MODULE: Doctors & Medical Providers Directory -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-doctors" aria-labelledby="doctors-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="doctors-heading">Doctors & Medical Providers Directory</h1>
+              <p>Active physician staff, clinical subspecialties, on-duty status, consultation rooms, and daily schedule
+                availability.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-secondary" onclick="renderDoctors()">Refresh Doctors</button>
+              <button class="btn btn-primary" onclick="document.getElementById('btnNewAppointment').click()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                Book with Physician
+              </button>
+            </div>
+          </div>
+
+          <!-- Doctors Stats Overview -->
+          <div class="stats-grid"
+            style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 1.5rem;">
+            <div class="stat-card" onclick="openMetricDetails('doctors')" style="--stat-color:var(--purple-ai); --stat-glow:var(--purple-ai-glow); cursor:pointer;" title="Click to view all active doctors one by one">
+              <div class="stat-header">
+                <span class="stat-label">Active Physicians</span>
+                <div class="stat-icon">🩺</div>
+              </div>
+              <div class="stat-value">6 Doctors</div>
+              <div class="stat-meta"><span class="trend-up">5 Specialties</span> on active campus roster • <strong style="color:var(--teal-light);">View Doctors →</strong></div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('doctors')" style="--stat-color:var(--emerald-success); --stat-glow:var(--emerald-glow); cursor:pointer;" title="Click to view on-duty doctors one by one">
+              <div class="stat-header">
+                <span class="stat-label">On Duty Today</span>
+                <div class="stat-icon">🟢</div>
+              </div>
+              <div class="stat-value">5 Providers</div>
+              <div class="stat-meta"><span class="stat-subtext">1 in procedure, 1 on-call • <strong>View Doctors →</strong></span></div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('doctors')" style="--stat-color:var(--teal-primary); --stat-glow:var(--teal-glow); cursor:pointer;" title="Click to view patient satisfaction and physician reviews">
+              <div class="stat-header">
+                <span class="stat-label">Patient Satisfaction</span>
+                <div class="stat-icon">★</div>
+              </div>
+              <div class="stat-value">4.89 / 5.0</div>
+              <div class="stat-meta"><span class="trend-up">↑ 814 reviews</span> verified patient rating • <strong>Inspect Ratings →</strong></div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('doctors')" style="--stat-color:var(--blue-info); --stat-glow:var(--blue-glow); cursor:pointer;" title="Click to view doctor availability and book">
+              <div class="stat-header">
+                <span class="stat-label">Next Open Slot</span>
+                <div class="stat-icon">⏱️</div>
+              </div>
+              <div class="stat-value" style="font-size:1.4rem;">11:15 AM</div>
+              <div class="stat-meta"><span class="stat-subtext">Dr. Alistair Finch (Cardiology) • <strong>Book Now →</strong></span></div>
+            </div>
+          </div>
+
+          <!-- Doctor Specialty Filter -->
+          <div class="filter-bar">
+            <div class="filter-group">
+              <label for="filterDoctorSpecialty"
+                style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Filter Specialty:</label>
+              <select id="filterDoctorSpecialty" class="select-filter" onchange="filterDoctorsList()">
+                <option value="ALL">All Clinical Specialties</option>
+                <option value="Cardiology">Cardiology</option>
+                <option value="Gastroenterology">Gastroenterology</option>
+                <option value="Neurology">Neurology</option>
+                <option value="Pediatrics">Pediatrics</option>
+                <option value="Orthopedics">Orthopedics</option>
+                <option value="Emergency Medicine">Emergency Medicine</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="filterDoctorDuty" style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Duty
+                Status:</label>
+              <select id="filterDoctorDuty" class="select-filter" onchange="filterDoctorsList()">
+                <option value="ALL">All Statuses</option>
+                <option value="ON">On Duty Only</option>
+                <option value="OFF">Off Duty / On-Call</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Doctors Cards Grid -->
+          <div class="doctors-grid" id="doctorsContainer">
+            <!-- Rendered dynamically via JS -->
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- MODULE: Appointment Management -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-appointments" aria-labelledby="appointments-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="appointments-heading">Appointment Management</h1>
+              <p>Manage provider schedules, check in incoming patients, detect room clashes, and reschedule visits.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-secondary" onclick="renderAppointments()">Refresh Roster</button>
+              <button class="btn btn-ai" onclick="simulateCancellationAutoFill()"
+                title="Simulate a patient cancellation and trigger autonomous waitlist slot filling">
+                ⚡ Simulate Sudden Cancellation & Auto-Fill
+              </button>
+              <button class="btn btn-primary" id="btnNewAppointment">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Book Appointment
+              </button>
+            </div>
+          </div>
+
+          <div class="filter-bar">
+            <div class="filter-group">
+              <label for="filterDoctorSelect"
+                style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Physician:</label>
+              <select id="filterDoctorSelect" class="select-filter">
+                <option value="ALL">All Attending Physicians</option>
+                <option value="DOC-101">Dr. Alistair Finch (Cardiology)</option>
+                <option value="DOC-102">Dr. Eleanor Hayes (Gastroenterology)</option>
+                <option value="DOC-103">Dr. Marcus Vance (Neurology)</option>
+                <option value="DOC-104">Dr. Sophia Patel (Pediatrics)</option>
+                <option value="DOC-105">Dr. Julian Reyes (Orthopedics)</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filterStatusSelect"
+                style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Status:</label>
+              <select id="filterStatusSelect" class="select-filter">
+                <option value="ALL">All Statuses</option>
+                <option value="Scheduled">Scheduled</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Checked-in">Checked-in</option>
+                <option value="In-Progress">In-Progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-container" style="margin-bottom:2rem;">
+            <table class="data-table" id="appointmentsTable">
+              <thead>
+                <tr>
+                  <th>Patient Details</th>
+                  <th>Assigned Physician & Room</th>
+                  <th>Appointment Time</th>
+                  <th>Status</th>
+                  <th>Clinical Notes & Triage</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="appointmentsTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Standby Patient Waitlist & Auto-Fill Section -->
+          <div class="waitlist-banner">
+            <div>
+              <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
+                <span style="font-size:1.2rem;">⏱️</span>
+                <strong style="font-size:1.05rem; color:var(--text-main);">Autonomous Waitlist & Sudden Cancellation
+                  Auto-Recovery Engine</strong>
+                <span class="badge badge-confirmed">Auto-Fill Active</span>
+              </div>
+              <p style="font-size:0.82rem; color:var(--text-secondary); margin:0;">
+                When an appointment is cancelled, the AI agent instantly scans waitlisted patients by clinical urgency &
+                time preferences, fires an automated SMS offer, and re-allocates the slot within 45 seconds.
+              </p>
+            </div>
+            <button class="btn btn-sm btn-primary" onclick="simulateCancellationAutoFill()">
+              ⚡ Trigger Auto-Fill Now
+            </button>
+          </div>
+
+          <div class="card" style="margin-bottom:1.5rem;">
+            <div class="card-header">
+              <div style="display:flex; align-items:center; gap:0.6rem;">
+                <h3 class="card-title">Standby Patient Waitlist Queue</h3>
+                <span class="badge badge-ai" id="waitlistCountBadge">3 Standby Patients</span>
+              </div>
+              <span style="font-size:0.75rem; color:var(--teal-light);">Priority Algorithm: Urgency + Wait
+                Duration</span>
+            </div>
+            <div class="table-container">
+              <table class="data-table" id="waitlistTable">
+                <thead>
+                  <tr>
+                    <th>Waitlist ID</th>
+                    <th>Standby Patient</th>
+                    <th>Target Physician & Specialty</th>
+                    <th>Preferred Window</th>
+                    <th>Clinical Urgency</th>
+                    <th>Notes & Standby Reason</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="waitlistTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- CORE MODULE: Rooms & Bed Inventory Management -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-rooms" aria-labelledby="rooms-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="rooms-heading">Clinical Suites, Exam Rooms & Bed Inventory</h1>
+              <p>Real-time room occupancy, telemetry beds, sterilization status, equipment readiness, and physician
+                assignments.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-secondary" onclick="renderRooms()">Refresh Census</button>
+              <button class="btn btn-ai" onclick="autoOptimizeRoomAllocation()">
+                ⚡ AI Auto-Rebalance Beds
+              </button>
+            </div>
+          </div>
+
+          <!-- Rooms Stats Overview (Clickable Filter Cards) -->
+          <div class="stats-grid"
+            style="grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); margin-bottom: 1.25rem;">
+            <div class="stat-card" id="cardRoomStatAll" onclick="setRoomStatusFilter('ALL')"
+              style="--stat-color:#f59e0b; --stat-glow:rgba(245,158,11,0.2); cursor:pointer;"
+              title="Click to view all 12 clinical suites">
+              <div class="stat-header">
+                <span class="stat-label">Total Suites & Beds</span>
+                <div class="stat-icon">🏥</div>
+              </div>
+              <div class="stat-value" id="statTotalRooms">12 Units</div>
+              <div class="stat-meta"><span class="stat-subtext">Across 5 hospital floors • <strong>Click to View All</strong></span></div>
+            </div>
+
+            <div class="stat-card" id="cardRoomStatOccupied" onclick="setRoomStatusFilter('Occupied')"
+              style="--stat-color:var(--emerald-success); --stat-glow:var(--emerald-glow); cursor:pointer;"
+              title="Click to show all occupied members">
+              <div class="stat-header">
+                <span class="stat-label">Currently Occupied</span>
+                <div class="stat-icon">🟢</div>
+              </div>
+              <div class="stat-value" id="statOccupiedRooms" style="color:var(--emerald-success);">7 Members</div>
+              <div class="stat-meta"><span class="trend-up" id="statOccupiedPct">58.3%</span> <span class="stat-subtext">census • <strong>Click to Show Members</strong></span></div>
+            </div>
+
+            <div class="stat-card" id="cardRoomStatAvailable" onclick="setRoomStatusFilter('Available')"
+              style="--stat-color:var(--teal-primary); --stat-glow:var(--teal-glow); cursor:pointer;"
+              title="Click to show available suites">
+              <div class="stat-header">
+                <span class="stat-label">Available & Cleaned</span>
+                <div class="stat-icon">✨</div>
+              </div>
+              <div class="stat-value" id="statAvailableRooms" style="color:#38bdf8;">4 Suites</div>
+              <div class="stat-meta"><span class="stat-subtext">Intake ready • <strong>Click to Show</strong></span></div>
+            </div>
+
+            <div class="stat-card" id="cardRoomStatMaintenance" onclick="setRoomStatusFilter('Maintenance')"
+              style="--stat-color:var(--rose-danger); --stat-glow:var(--rose-glow); cursor:pointer;"
+              title="Click to show maintenance suites">
+              <div class="stat-header">
+                <span class="stat-label">Maintenance / Cycle</span>
+                <div class="stat-icon">🧹</div>
+              </div>
+              <div class="stat-value" id="statMaintenanceRooms" style="color:var(--rose-danger);">1 Unit</div>
+              <div class="stat-meta"><span class="stat-subtext">HEPA cycle • <strong>Click to Show</strong></span></div>
+            </div>
+          </div>
+
+          <!-- Quick Occupancy Filter Pills & Search -->
+          <div class="filter-bar" style="margin-bottom: 1.25rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+              <span style="font-size:0.78rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em;">Filter:</span>
+              <button type="button" class="btn btn-sm room-filter-pill active" id="pillFilterAll" onclick="setRoomStatusFilter('ALL')">
+                All Suites (<span id="countPillAll">12</span>)
+              </button>
+              <button type="button" class="btn btn-sm room-filter-pill" id="pillFilterOccupied" onclick="setRoomStatusFilter('Occupied')" style="border-color:rgba(16,185,129,0.35);">
+                🟢 Occupied Members (<span id="countPillOccupied" style="color:var(--emerald-success); font-weight:700;">7</span>)
+              </button>
+              <button type="button" class="btn btn-sm room-filter-pill" id="pillFilterAvailable" onclick="setRoomStatusFilter('Available')">
+                ✨ Available Suites (<span id="countPillAvailable">4</span>)
+              </button>
+              <button type="button" class="btn btn-sm room-filter-pill" id="pillFilterMaintenance" onclick="setRoomStatusFilter('Maintenance')">
+                🧹 In Sanitation (<span id="countPillMaintenance">1</span>)
+              </button>
+            </div>
+
+            <div class="filter-group">
+              <label for="filterRoomDepartment"
+                style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Department:</label>
+              <select id="filterRoomDepartment" class="select-filter" onchange="filterRoomsList()">
+                <option value="ALL">All Hospital Departments</option>
+                <option value="Cardiology">Cardiology</option>
+                <option value="Gastroenterology">Gastroenterology</option>
+                <option value="Neurology">Neurology</option>
+                <option value="Pediatrics">Pediatrics</option>
+                <option value="Orthopedics">Orthopedics</option>
+                <option value="Emergency Medicine">Emergency Medicine</option>
+                <option value="Oncology & Infusion">Oncology & Infusion</option>
+                <option value="Internal Medicine">Internal Medicine Telemetry</option>
+              </select>
+              <select id="filterRoomStatus" class="select-filter" onchange="filterRoomsList()" style="display:none;">
+                <option value="ALL">All Statuses</option>
+                <option value="Occupied">Occupied</option>
+                <option value="Available">Available</option>
+                <option value="Reserved">Reserved</option>
+                <option value="Maintenance">Maintenance / Cleaning</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Dedicated Occupied Members Inpatient Census Roster (Shown when viewing Occupied or All) -->
+          <div class="card" id="occupiedMembersRosterCard" style="margin-bottom: 1.5rem; border-color: rgba(16, 185, 129, 0.35); background: linear-gradient(145deg, rgba(16, 185, 129, 0.04), var(--bg-card));">
+            <div class="card-header" style="flex-wrap:wrap; gap:0.75rem;">
+              <div class="card-title">
+                <span style="font-size:1.25rem;">🟢</span>
+                <span>Active Inpatient Occupants Census (<strong id="rosterOccupantCount" style="color:var(--emerald-success);">7 Members Occupied</strong>)</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="badge badge-confirmed">100% Telemetry Linked</span>
+                <button class="btn btn-sm btn-secondary" onclick="exportOccupancyReport()">
+                  📥 Export Census
+                </button>
+              </div>
+            </div>
+
+            <div class="table-container" style="max-height:360px; overflow-y:auto;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Occupant Member</th>
+                    <th>Suite / Bed</th>
+                    <th>Department & Floor</th>
+                    <th>Attending Doctor</th>
+                    <th>Admitted / Condition</th>
+                    <th>Telemetry Vitals</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="occupiedMembersTableBody">
+                  <!-- Dynamically rendered via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Section Heading for Room Cards Grid -->
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem;">
+            <h3 style="font-size:1.05rem; font-weight:700; color:var(--text-main); display:flex; align-items:center; gap:0.5rem;">
+              <span>Suite & Bed Telemetry Grid</span>
+              <span class="badge" id="gridFilterStatusBadge" style="background:var(--bg-elevated); color:var(--text-secondary);">Showing 12 Units</span>
+            </h3>
+            <span style="font-size:0.76rem; color:var(--text-muted);">Real-time equipment status & sterilization logs</span>
+          </div>
+
+          <!-- Rooms Inventory Grid -->
+          <div class="rooms-grid" id="roomsContainer">
+            <!-- Rendered dynamically via JS -->
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- MODULE: Clinical Departments Management (HospiCare Core) -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-departments" data-alias="department" aria-labelledby="departments-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="departments-heading">Hospital Departments & Clinical Units</h1>
+              <p>Oversight of clinical wings, department heads, inpatient bed capacity, medical staff allocation, and operational readiness.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-secondary" onclick="exportDepartmentsSummary()">Export Roster</button>
+              <button class="btn btn-primary" onclick="openAddDepartmentModal()">
+                ➕ Add Department
+              </button>
+            </div>
+          </div>
+
+          <!-- Department Overview Metric Pills -->
+          <div class="stats-grid" style="margin-bottom:1.25rem;">
+            <div class="stat-card" onclick="openMetricDetails('departments')" style="--stat-color:#2563eb; --stat-glow:rgba(37,99,235,0.25); cursor:pointer;" title="Click to view all hospital departments one by one">
+              <div class="stat-header">
+                <span class="stat-label">Active Departments</span>
+                <div class="stat-icon">🏥</div>
+              </div>
+              <div class="stat-value" id="deptMetricTotal">8</div>
+              <div class="stat-meta">
+                <span class="trend-up">100% Operational</span>
+                <span class="stat-subtext">across 5 wings • <strong>View All →</strong></span>
+              </div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('doctors')" style="--stat-color:#10b981; --stat-glow:rgba(16,185,129,0.25); cursor:pointer;" title="Click to view all active doctors one by one">
+              <div class="stat-header">
+                <span class="stat-label">Departmental Doctors</span>
+                <div class="stat-icon">🩺</div>
+              </div>
+              <div class="stat-value" id="deptMetricDoctors">38</div>
+              <div class="stat-meta">
+                <span class="trend-up">Full Coverage</span>
+                <span class="stat-subtext">chiefs & specialists • <strong>View Doctors →</strong></span>
+              </div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('beds')" style="--stat-color:#8b5cf6; --stat-glow:rgba(139,92,246,0.25); cursor:pointer;" title="Click to view bed allocations one by one">
+              <div class="stat-header">
+                <span class="stat-label">Allocated Beds</span>
+                <div class="stat-icon">🛏️</div>
+              </div>
+              <div class="stat-value" id="deptMetricBeds">156</div>
+              <div class="stat-meta">
+                <span class="trend-up">73.7% Inpatient Load</span>
+                <span class="stat-subtext">115 occupied • <strong>View Beds →</strong></span>
+              </div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('staff')" style="--stat-color:#06b6d4; --stat-glow:rgba(6,182,212,0.25); cursor:pointer;" title="Click to view clinical staff roster one by one">
+              <div class="stat-header">
+                <span class="stat-label">Total Clinical Staff</span>
+                <div class="stat-icon">👥</div>
+              </div>
+              <div class="stat-value" id="deptMetricStaff">208</div>
+              <div class="stat-meta">
+                <span class="trend-up">Shift Matched</span>
+                <span class="stat-subtext">nurses, tech & admin • <strong>View Staff →</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Department Filter & Search Bar -->
+          <div class="filter-bar">
+            <div class="filter-group">
+              <input type="text" id="deptSearchInput" class="input-filter" placeholder="Search departments, head doctor, wing..." oninput="filterDepartments()">
+              <select id="deptWingFilter" class="select-filter" onchange="filterDepartments()">
+                <option value="ALL">All Campus Wings</option>
+                <option value="East">East Wing</option>
+                <option value="West">West Wing</option>
+                <option value="North">North Pavilion</option>
+                <option value="South">South Wing</option>
+                <option value="Ground">Ground Level / ER</option>
+                <option value="Central">Central Tower</option>
+              </select>
+              <select id="deptStatusFilter" class="select-filter" onchange="filterDepartments()">
+                <option value="ALL">All Statuses</option>
+                <option value="Active">Active</option>
+                <option value="High Capacity">High Capacity</option>
+              </select>
+            </div>
+            <div style="font-size:0.82rem; color:var(--text-secondary);" id="deptCountSummary">Showing 8 Departments</div>
+          </div>
+
+          <!-- Departments Grid Container -->
+          <div class="departments-grid" id="departmentsContainer">
+            <!-- Dynamically populated by JS renderDepartments() -->
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- MODULE: Patient Communication -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-communication" aria-labelledby="comms-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="comms-heading">Patient Communication Hub</h1>
+              <p>Omnichannel secure patient inbox. Two-way communication with automated HIPAA-compliant AI responses.
+              </p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-ai" onclick="aiDraftReply()">
+                ⚡ AI Draft Smart Response
+              </button>
+            </div>
+          </div>
+
+          <div class="chat-layout">
+            <!-- Sidebar: Patient list -->
+            <div class="chat-sidebar">
+              <div
+                style="padding:0.85rem 1rem; border-bottom:1px solid var(--border-subtle); font-weight:700; font-size:0.8rem; text-transform:uppercase; color:var(--text-muted);">
+                Active Conversations
+              </div>
+              <div class="chat-patient-list" id="chatPatientList">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- Center: Chat thread -->
+            <div class="chat-main">
+              <div class="chat-header">
+                <div>
+                  <h3 id="chatHeaderPatientName" style="font-size:1.05rem;">Jane L. Smith</h3>
+                  <p id="chatHeaderPatientSub" style="font-size:0.75rem;">Channel: SMS • MRN-90214</p>
+                </div>
+                <span class="badge badge-confirmed">Encrypted Channel</span>
+              </div>
+
+              <div class="chat-messages" id="chatThreadMessages">
+                <!-- Thread messages rendered here -->
+              </div>
+
+              <div class="chat-ai-bar">
+                <span style="font-size:0.75rem; color:var(--purple-ai); font-weight:600;">
+                  ✨ AI Copilot active: Fasting instructions & parking directions ready.
+                </span>
+                <button class="btn btn-sm btn-ai" onclick="aiDraftReply()">Use Smart Draft</button>
+              </div>
+
+              <div class="chat-input-bar">
+                <input type="text" id="chatMessageInput"
+                  placeholder="Type a HIPAA-compliant message or click AI Smart Draft...">
+                <button class="btn btn-primary" onclick="sendChatMessage()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                  </svg>
+                  Send
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Patient EHR preview drawer -->
+            <div class="chat-patient-info" id="chatPatientInfoPanel">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- CORE RESPONSIBILITY 2: Document Management & Data Organization -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-medicalrecords" data-alias="documents"
+          aria-labelledby="medicalrecords-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="medicalrecords-heading">Medical Records & Document Management</h1>
+              <p>Digitizes, tags, and files Electronic Health Records (EHR), lab results, referral letters, and
+                automatically categorizes incoming faxes into patient charts.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-secondary" onclick="renderDocuments()">Refresh Queue</button>
+              <button class="btn btn-ai" onclick="runDocumentOcrScan('DOC-REF-001')">
+                ⚡ Process Sample Referral with AI
+              </button>
+              <button class="btn btn-primary" onclick="processAllIncomingFaxes()">
+                ⚡ Auto-Categorize & File All Faxes
+              </button>
+            </div>
+          </div>
+
+          <!-- Incoming Digital Faxes & Categorization Hub -->
+          <div class="card" style="margin-bottom:1.5rem; border-color:rgba(6, 182, 212, 0.3);">
+            <div class="card-header">
+              <div style="display:flex; align-items:center; gap:0.6rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal-primary)"
+                  stroke-width="2">
+                  <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
+                  <path
+                    d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+                </svg>
+                <h3 class="card-title">Incoming Digital Fax Stream & Record Categorization</h3>
+                <span class="badge badge-ai" id="faxQueueCountBadge">4 Active Faxes</span>
+              </div>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Real-time OCR extraction & EHR patient chart
+                mapping</span>
+            </div>
+
+            <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:1rem;">
+              Incoming faxes from external clinics, pathology labs, and payers are automatically ingested, parsed via
+              OCR, tagged with ICD-10 diagnostic codes, and routed into the verified Electronic Health Record (EHR) of
+              the patient.
+            </p>
+
+            <div class="fax-stream-grid" id="faxStreamContainer">
+              <!-- Rendered dynamically via JS -->
+            </div>
+          </div>
+
+          <div class="doc-grid-layout">
+            <!-- Left: Document List -->
+            <div>
+              <h3 style="font-size:1.05rem; margin-bottom:1rem;">Verified Clinical Document Repository</h3>
+              <div id="documentsListContainer">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Right: OCR Document Viewer -->
+            <div class="doc-viewer-card">
+              <div
+                style="padding:1rem 1.25rem; border-bottom:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:700; font-size:0.85rem; text-transform:uppercase; color:var(--teal-light);">
+                  High-Resolution Document Preview & OCR Inspection
+                </span>
+                <span class="badge badge-ai">Optical Character Recognition</span>
+              </div>
+
+              <img src="assets/sample_referral.jpg" alt="Clinical Referral Letter" class="doc-preview-img"
+                id="activeDocImg">
+
+              <div class="ocr-extracted-box" id="activeOcrDetails">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- CORE RESPONSIBILITY 3: Administrative Summaries -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-summaries" aria-labelledby="summaries-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="summaries-heading">Administrative Summaries</h1>
+              <p>Transcribes clinical visit notes for physician review, synthesizes plain-language patient discharge
+                guides, and prepares daily shift handoffs.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-secondary" onclick="renderAdministrativeSummaries()">Refresh Summaries</button>
+              <button class="btn btn-ai" onclick="simulateClinicalScribe()">
+                ⚡ Transcribe Dr. Finch Audio (AI)
+              </button>
+              <button class="btn btn-primary" onclick="generateDailyHandoffSummary()">
+                ⚡ Prepare Daily Shift Handoff
+              </button>
+            </div>
+          </div>
+
+          <div class="clinical-guardrail-banner">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-success)"
+              stroke-width="2.2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <div>
+              <strong>Clinical Guardrail Policy Active:</strong> Ambient scribing generates draft transcription strictly
+              for licensed physician review. The system enforces <strong>zero autonomous diagnosis or treatment
+                recommendations</strong>. All clinical orders and EHR chart filings require explicit physician
+              electronic signature.
+            </div>
+          </div>
+
+          <!-- Sub-tabs for 3 Core Summary Features -->
+          <div class="sub-tabs-bar">
+            <button class="sub-tab-btn active" data-tab="scribe" onclick="switchSummarySubTab('scribe')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                <line x1="12" y1="19" x2="12" y2="22" />
+              </svg>
+              Clinical Scribing (Physician Review)
+            </button>
+            <button class="sub-tab-btn" data-tab="discharge" onclick="switchSummarySubTab('discharge')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+              </svg>
+              Plain-Language Patient Discharge
+            </button>
+            <button class="sub-tab-btn" data-tab="handoff" onclick="switchSummarySubTab('handoff')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              Daily Shift Handoff (Nursing & Admin)
+            </button>
+          </div>
+
+          <!-- Tab 1: Clinical Scribing -->
+          <div id="summaryTabScribe" class="summary-tab-content">
+            <div class="audio-player-card">
+              <div
+                style="width:44px; height:44px; border-radius:50%; background:var(--teal-primary); display:flex; align-items:center; justify-content:center; cursor:pointer;"
+                onclick="showToast('Audio Playing', 'Streaming physician dictation recording: Dr. Eleanor Hayes with patient Jane L. Smith...', 'info')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#080c14">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+              </div>
+              <div style="flex-shrink:0;">
+                <strong style="font-size:0.92rem; color:var(--text-main); display:block;">Physician Clinical Dictation
+                  Stream</strong>
+                <span style="font-size:0.75rem; color:var(--text-muted);">Attending: Dr. Eleanor Hayes • Patient: Jane
+                  L. Smith (MRN-90214)</span>
+              </div>
+              <div class="audio-waveform-visual" id="scribeWaveform">
+                <div class="wave-bar" style="animation-delay:0.1s"></div>
+                <div class="wave-bar" style="animation-delay:0.3s"></div>
+                <div class="wave-bar" style="animation-delay:0.2s"></div>
+                <div class="wave-bar" style="animation-delay:0.5s"></div>
+                <div class="wave-bar" style="animation-delay:0.4s"></div>
+                <div class="wave-bar" style="animation-delay:0.2s"></div>
+                <div class="wave-bar" style="animation-delay:0.6s"></div>
+                <div class="wave-bar" style="animation-delay:0.3s"></div>
+                <div class="wave-bar" style="animation-delay:0.1s"></div>
+                <div class="wave-bar" style="animation-delay:0.4s"></div>
+              </div>
+              <span class="badge badge-ai" style="flex-shrink:0;">AI Transcription 99.8%</span>
+            </div>
+
+            <div id="clinicalNotesContainer">
+              <!-- Rendered dynamically via JS -->
+            </div>
+          </div>
+
+          <!-- Tab 2: Plain-Language Patient Discharge -->
+          <div id="summaryTabDischarge" class="summary-tab-content" style="display:none;">
+            <div class="card"
+              style="margin-bottom:1.25rem; background:rgba(6, 182, 212, 0.05); border-color:rgba(6, 182, 212, 0.25);">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <strong style="font-size:0.95rem; color:var(--teal-light);">Plain-Language Synthesis Engine</strong>
+                  <p style="font-size:0.8rem; color:var(--text-secondary); margin:0;">
+                    Transforms complex discharge orders and physician jargon into compassionate, 5th-grade reading level
+                    summaries with clear medication schedules and red-flag warning symptoms.
+                  </p>
+                </div>
+                <span class="badge badge-confirmed">Grade 5.0 Certified</span>
+              </div>
+            </div>
+
+            <div id="dischargeSummariesContainer">
+              <!-- Rendered dynamically via JS -->
+            </div>
+          </div>
+
+          <!-- Tab 3: Daily Shift Handoff -->
+          <div id="summaryTabHandoff" class="summary-tab-content" style="display:none;">
+            <div id="shiftHandoffContainer">
+              <!-- Rendered dynamically via JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- CORE RESPONSIBILITY 4: Workflow & Task Coordination -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-coordination" aria-labelledby="coordination-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="coordination-heading">Workflow & Task Coordination</h1>
+              <p>Coordinates prior authorization requests with payers, routes internal clinical tasks, and monitors live
+                intake queues with instant triage flagging.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-secondary" onclick="renderTaskCoordination()">Refresh Queue</button>
+              <button class="btn btn-ai" onclick="autoRoutePendingTasks()">
+                ⚡ Auto-Route All Tasks (AI)
+              </button>
+              <button class="btn btn-danger" onclick="simulateUrgentIntakeMessage()">
+                🚨 Simulate Urgent Chest Pain Alert
+              </button>
+            </div>
+          </div>
+
+          <div class="clinical-guardrail-banner">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-success)"
+              stroke-width="2.2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <div>
+              <strong>Operational Scope Boundary Active:</strong> Task routing packages refill authorizations and stat
+              lab orders for human clinician review. The system enforces <strong>zero autonomous medication
+                decisions</strong>. Incoming symptom alerts flag patients exclusively for immediate human nurse
+              evaluation.
+            </div>
+          </div>
+
+          <!-- Sub-tabs for Coordination -->
+          <div class="sub-tabs-bar">
+            <button class="sub-tab-btn active" data-tab="tasks" onclick="switchCoordinationSubTab('tasks')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 11 12 14 22 4" />
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+              </svg>
+              Internal Task Router
+            </button>
+            <button class="sub-tab-btn" data-tab="intake" onclick="switchCoordinationSubTab('intake')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
+              Live Intake Queue & Triage Alerts
+              <span class="btn-badge-dot" style="margin-left:0.3rem;"></span>
+            </button>
+            <button class="sub-tab-btn" data-tab="priorauth" onclick="switchCoordinationSubTab('priorauth')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                <line x1="1" y1="10" x2="23" y2="10" />
+              </svg>
+              Prior Auth Coordination (EDI 278)
+            </button>
+          </div>
+
+          <!-- Tab 1: Internal Task Router -->
+          <div id="coordTabTasks" class="coord-tab-content">
+            <div class="card" style="margin-bottom:1.5rem;">
+              <div class="card-header">
+                <div style="display:flex; align-items:center; gap:0.6rem;">
+                  <h3 class="card-title">Inter-Departmental Task Routing Matrix</h3>
+                  <span class="badge badge-ai" id="internalTasksCountBadge">4 Active Tasks</span>
+                </div>
+                <span style="font-size:0.75rem; color:var(--teal-light);">Intelligent Load-Balanced Routing</span>
+              </div>
+              <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:1rem;">
+                Routes internal tasks (prescription refills, stat lab orders, radiology requests, insurance escalations)
+                directly to the optimal staff member based on role credentials and real-time department workload.
+              </p>
+              <div class="table-container">
+                <table class="data-table task-router-table" id="internalTasksTable">
+                  <thead>
+                    <tr>
+                      <th>Task ID & Type</th>
+                      <th>Target Patient</th>
+                      <th>Requested Clinical Action</th>
+                      <th>Assigned Team Member</th>
+                      <th>Department</th>
+                      <th>Urgency</th>
+                      <th>Status & AI Recommendation</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="internalTasksTableBody">
+                    <!-- Rendered dynamically via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Live Intake Queue & Urgent Triage -->
+          <div id="coordTabIntake" class="coord-tab-content" style="display:none;">
+            <!-- Urgent Red Triage Banner -->
+            <div id="criticalTriageBannerContainer">
+              <!-- Injected via JS -->
+            </div>
+
+            <div class="card" style="margin-bottom:1.5rem;">
+              <div class="card-header">
+                <div style="display:flex; align-items:center; gap:0.6rem;">
+                  <h3 class="card-title">Inbound Intake Communications Stream</h3>
+                  <span class="badge badge-confirmed">Continuous NLP Monitoring</span>
+                </div>
+                <span style="font-size:0.75rem; color:var(--rose-danger); font-weight:700;">Zero Urgent Delay
+                  Policy</span>
+              </div>
+              <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:1rem;">
+                Monitors all incoming SMS, WhatsApp, and Portal communications with real-time clinical NLP scoring.
+                High-acuity symptoms (e.g. chest pain, allergic reactions, bleeding) trigger immediate audible alerts
+                and priority paging to the charge nurse.
+              </p>
+              <div id="intakeQueueItemsContainer">
+                <!-- Rendered dynamically via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: Prior Authorization Coordination -->
+          <div id="coordTabPriorAuth" class="coord-tab-content" style="display:none;">
+            <div class="card" style="margin-bottom:1.5rem;">
+              <div class="card-header">
+                <div style="display:flex; align-items:center; gap:0.6rem;">
+                  <h3 class="card-title">Payer Prior Authorization & Electronic EDI 278 Tracking</h3>
+                  <span class="badge badge-ai">Automated Verification</span>
+                </div>
+                <button class="btn btn-sm btn-secondary" onclick="check270Eligibility('Jane L. Smith')">Run 270/271
+                  Real-time Query</button>
+              </div>
+              <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:1rem;">
+                Autonomous coordination with major payers (BlueCross, Aetna, Cigna, UHC). Matches clinical necessity
+                from EHR visit notes to CPT/ICD-10 criteria and auto-generates formal denial appeals.
+              </p>
+              <div class="table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Patient</th>
+                      <th>Payer & Policy</th>
+                      <th>Procedure / CPT</th>
+                      <th>ICD-10 Diagnostic</th>
+                      <th>Status</th>
+                      <th>Prior Auth #</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Jane L. Smith</strong><br><span
+                          style="font-size:0.75rem; color:var(--text-muted);">MRN-90214</span></td>
+                      <td>BlueCross Premier PPO<br><span
+                          style="font-size:0.72rem; color:var(--teal-light);">POL-984420-A</span></td>
+                      <td>43239 (Diagnostic Endoscopy)</td>
+                      <td><span class="badge badge-scheduled">R10.9</span></td>
+                      <td><span class="badge badge-confirmed">Approved (EDI 278)</span></td>
+                      <td><code>PA-99120</code></td>
+                      <td><button class="btn btn-sm btn-secondary"
+                          onclick="showToast('Prior Auth Valid', 'EDI 278 verified with BlueCross: Zero patient dispute.', 'success')">Verify
+                          278</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Sarah Jenkins</strong><br><span
+                          style="font-size:0.75rem; color:var(--text-muted);">MRN-90218</span></td>
+                      <td>Cigna Open Access<br><span
+                          style="font-size:0.72rem; color:var(--teal-light);">CIG-88214-E</span></td>
+                      <td>29881 (Knee Arthroscopy)</td>
+                      <td><span class="badge badge-scheduled">M23.22</span></td>
+                      <td><span class="badge badge-confirmed">Approved</span></td>
+                      <td><code>PA-77291</code></td>
+                      <td><button class="btn btn-sm btn-secondary"
+                          onclick="showToast('Prior Auth Valid', 'Authorized for 90 days. Copay $75.', 'success')">Verify
+                          278</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Liam O'Connor</strong><br><span
+                          style="font-size:0.75rem; color:var(--text-muted);">MRN-90220</span></td>
+                      <td>UnitedHealthcare Choice<br><span
+                          style="font-size:0.72rem; color:var(--rose-danger);">UHC-33104</span></td>
+                      <td>70553 (Brain MRI w/ Contrast)</td>
+                      <td><span class="badge badge-urgent">G43.909</span></td>
+                      <td><span class="badge badge-urgent">Denied (Missing Trial)</span></td>
+                      <td><span style="color:var(--text-muted);">Pending Appeal</span></td>
+                      <td><button class="btn btn-sm btn-ai" onclick="generateClaimAppeal('CLM-8928')">⚡ Draft AI
+                          Appeal</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- MODULE 4: Staff Scheduling -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-staff" data-alias="scheduling" aria-labelledby="staff-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="staff-heading">Staff Directory & Roster Management</h1>
+              <p>Multi-department medical personnel, clinical credentials, weekly shift allocations, overtime compliance
+                monitoring, and AI rebalancing.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-secondary" onclick="renderStaff()">Refresh Staff</button>
+              <button class="btn btn-ai" onclick="autoBalanceRoster()">
+                ⚡ Auto-Balance Roster (AI)
+              </button>
+            </div>
+          </div>
+
+          <!-- Staff Stats Overview -->
+          <div class="stats-grid"
+            style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 1.5rem;">
+            <div class="stat-card" onclick="openMetricDetails('staff')" style="--stat-color:var(--blue-info); --stat-glow:var(--blue-glow); cursor:pointer;" title="Click to view all staff members one by one">
+              <div class="stat-header">
+                <span class="stat-label">Total Hospital Staff</span>
+                <div class="stat-icon">👩‍⚕️</div>
+              </div>
+              <div class="stat-value" id="statTotalStaff">9 Members</div>
+              <div class="stat-meta"><span class="trend-up">5 Departments</span> on campus roster • <strong style="color:var(--teal-light);">View Staff →</strong></div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('staff')" style="--stat-color:var(--emerald-success); --stat-glow:var(--emerald-glow); cursor:pointer;" title="Click to view on-duty staff members">
+              <div class="stat-header">
+                <span class="stat-label">On Duty Today</span>
+                <div class="stat-icon">🟢</div>
+              </div>
+              <div class="stat-value" id="statOnDutyStaff">7 Active</div>
+              <div class="stat-meta"><span class="stat-subtext">1 On-Call • 1 Scheduled Off • <strong>View Staff →</strong></span></div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('staff')" style="--stat-color:var(--rose-danger); --stat-glow:var(--rose-glow); cursor:pointer;" title="Click to view overtime flagged staff">
+              <div class="stat-header">
+                <span class="stat-label">Overtime Flagged</span>
+                <div class="stat-icon">⚠️</div>
+              </div>
+              <div class="stat-value" style="color:var(--rose-danger);" id="statOvertimeStaff">1 Alert</div>
+              <div class="stat-meta"><span class="stat-subtext">Nurse Rachel Adams (42 hrs) • <strong>Inspect Roster →</strong></span></div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('staff')" style="--stat-color:var(--teal-primary); --stat-glow:var(--teal-glow); cursor:pointer;" title="Click to view shift fulfillment breakdown">
+              <div class="stat-header">
+                <span class="stat-label">Shift Fulfillment</span>
+                <div class="stat-icon">📋</div>
+              </div>
+              <div class="stat-value" style="color:var(--teal-light);">98.4%</div>
+              <div class="stat-meta"><span class="trend-up">100% Acuity Covered • <strong>View Coverage →</strong></span></div>
+            </div>
+          </div>
+
+          <!-- Sub-tabs bar for Staff Module -->
+          <div class="sub-tabs-bar" style="margin-bottom:1.25rem;">
+            <button class="sub-tab-btn active" id="btnStaffTabDirectory" onclick="switchStaffSubTab('directory')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+              Staff Directory & Credentials
+            </button>
+            <button class="sub-tab-btn" id="btnStaffTabRoster" onclick="switchStaffSubTab('roster')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              Weekly Shift Matrix (Mon–Sun)
+            </button>
+          </div>
+
+          <!-- Overtime Banner -->
+          <div class="card"
+            style="margin-bottom:1.5rem; background:linear-gradient(145deg, rgba(244,63,94,0.08), var(--bg-card)); border-color:rgba(244,63,94,0.3);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:0.75rem;">
+                <span
+                  style="width:12px; height:12px; border-radius:50%; background:var(--rose-danger); display:inline-block; box-shadow:0 0 8px var(--rose-danger);"></span>
+                <div>
+                  <strong style="color:var(--text-main); font-size:0.95rem;">Overtime Alert: Emergency Department Night
+                    Shift</strong>
+                  <p style="font-size:0.8rem; color:var(--text-secondary); margin:0;">Nurse Rachel Adams is scheduled
+                    for 42 hours this week (exceeding standard 36h threshold). Nurse Kevin Lee has available on-call
+                    availability.</p>
+                </div>
+              </div>
+              <button class="btn btn-sm btn-danger" onclick="autoBalanceRoster()">Resolve Swap</button>
+            </div>
+          </div>
+
+          <!-- Subtab Content 1: Staff Directory -->
+          <div id="staffSubTabDirectory">
+            <!-- Filter Bar for Staff -->
+            <div class="filter-bar">
+              <div class="filter-group">
+                <label for="filterStaffDept"
+                  style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Department:</label>
+                <select id="filterStaffDept" class="select-filter" onchange="renderStaff()">
+                  <option value="ALL">All Departments</option>
+                  <option value="Cardiology">Cardiology</option>
+                  <option value="Gastroenterology">Gastroenterology</option>
+                  <option value="Emergency Dept">Emergency Dept</option>
+                  <option value="Internal Medicine">Internal Medicine</option>
+                  <option value="Radiology & Imaging">Radiology & Imaging</option>
+                  <option value="Pharmacy & Infusion">Pharmacy & Infusion</option>
+                  <option value="Revenue Cycle">Revenue Cycle</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label for="filterStaffStatus"
+                  style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Status:</label>
+                <select id="filterStaffStatus" class="select-filter" onchange="renderStaff()">
+                  <option value="ALL">All Shift Statuses</option>
+                  <option value="On Duty">On Duty Only</option>
+                  <option value="On-Call">On-Call Only</option>
+                  <option value="Off">Scheduled Off</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="staff-grid" id="staffDirectoryContainer">
+              <!-- Injected dynamically via JS -->
+            </div>
+          </div>
+
+          <!-- Subtab Content 2: Weekly Shift Matrix -->
+          <div id="staffSubTabRoster" style="display:none;">
+            <div id="staffRosterMatrix">
+              <!-- Roster Grid injected via JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- MODULE 5: Insurance / Admin Workflow -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-billing" data-alias="insurance" aria-labelledby="billing-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="billing-heading">Billing, Claims & Insurance Workflow</h1>
+              <p>Real-time 270/271 eligibility verification, EDI 278 prior authorizations, clean claim yield tracking,
+                and automated denial appeals.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-secondary" onclick="check270Eligibility('Jane L. Smith')">Run 270/271
+                Query</button>
+              <button class="btn btn-ai" onclick="generateClaimAppeal('CLM-8928')">
+                ⚡ AI Claim Appeal Generator
+              </button>
+            </div>
+          </div>
+
+          <!-- Billing Stats Overview -->
+          <div class="stats-grid"
+            style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 1.5rem;">
+            <div class="stat-card" onclick="openMetricDetails('bills')" style="--stat-color:var(--emerald-success); --stat-glow:var(--emerald-glow); cursor:pointer;" title="Click to view all billing claims one by one">
+              <div class="stat-header">
+                <span class="stat-label">Total Claims Billed</span>
+                <div class="stat-icon">💳</div>
+              </div>
+              <div class="stat-value">$248,320</div>
+              <div class="stat-meta"><span class="trend-up">↑ 5 claims today</span> active revenue cycle • <strong style="color:var(--teal-light);">View Claims →</strong></div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('revenue')" style="--stat-color:var(--purple-ai); --stat-glow:var(--purple-ai-glow); cursor:pointer;" title="Click to view revenue ledger one by one">
+              <div class="stat-header">
+                <span class="stat-label">Clean Claim Yield</span>
+                <div class="stat-icon">🎯</div>
+              </div>
+              <div class="stat-value" style="color:var(--teal-light);">91.8%</div>
+              <div class="stat-meta"><span class="trend-up">↑ 6.2%</span> first-pass payer acceptance • <strong>View Revenue →</strong></div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('bills')" style="--stat-color:var(--teal-primary); --stat-glow:var(--teal-glow); cursor:pointer;" title="Click to view prior auths and EDI claims">
+              <div class="stat-header">
+                <span class="stat-label">Prior Auths (EDI 278)</span>
+                <div class="stat-icon">🛡️</div>
+              </div>
+              <div class="stat-value">94.6%</div>
+              <div class="stat-meta"><span class="stat-subtext">Avg 12s turnaround with payers • <strong>View Auth →</strong></span></div>
+            </div>
+
+            <div class="stat-card" onclick="openMetricDetails('bills')" style="--stat-color:var(--rose-danger); --stat-glow:var(--rose-glow); cursor:pointer;" title="Click to view claims appeals queue">
+              <div class="stat-header">
+                <span class="stat-label">Appeals Queue</span>
+                <div class="stat-icon">⚖️</div>
+              </div>
+              <div class="stat-value" style="color:var(--rose-danger);">1 Case</div>
+              <div class="stat-meta"><span class="stat-subtext">CLM-8928 (AI Appeal ready) • <strong>View Appeal →</strong></span></div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="data-table" id="claimsTable">
+              <thead>
+                <tr>
+                  <th>Claim ID</th>
+                  <th>Patient & Payer</th>
+                  <th>CPT & ICD-10 Diagnostic</th>
+                  <th>Total Amount</th>
+                  <th>Adjudication Status</th>
+                  <th>Prior Auth #</th>
+                  <th>Administrative Actions</th>
+                </tr>
+              </thead>
+              <tbody id="claimsTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- MODULE 6: Automated Reminders -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-reminders" aria-labelledby="reminders-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="reminders-heading">Automated Reminders Queue</h1>
+              <p>Omnichannel delivery engine for fasting protocols, appointment confirmations, and follow-ups.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-ai" onclick="triggerBatchReminders()">
+                ⚡ Trigger Batch Reminders
+              </button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="data-table" id="remindersTable">
+              <thead>
+                <tr>
+                  <th>Reminder ID</th>
+                  <th>Patient Name</th>
+                  <th>Reminder Protocol</th>
+                  <th>Scheduled Dispatch</th>
+                  <th>Delivery Channel</th>
+                  <th>Carrier Status</th>
+                  <th>Patient Acknowledgment</th>
+                </tr>
+              </thead>
+              <tbody id="remindersTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- MODULE 7: Email/SMS Workflows -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-workflows" aria-labelledby="workflows-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="workflows-heading">Email & SMS Administrative Workflows</h1>
+              <p>Visual multi-step communication pipelines with automated escalation rules and condition branching.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-secondary" onclick="simulateWorkflow('New Patient Digital Onboarding')">
+                Test Active Flow
+              </button>
+            </div>
+          </div>
+
+          <div id="workflowsContainer">
+            <!-- Visual pipelines rendered dynamically -->
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- MODULE 8: Reporting Dashboard -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-reporting" aria-labelledby="reporting-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="reporting-heading">Administrative Reporting Dashboard</h1>
+              <p>Hospital throughput, patient show-up rates, revenue cycle metrics, and AI operational efficiency.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn btn-secondary" onclick="window.print()">Export PDF / Print</button>
+            </div>
+          </div>
+
+          <div class="charts-grid">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Weekly Patient Volume & Show-up Rates</h3>
+                <span class="badge badge-confirmed">Show Rate 94.2%</span>
+              </div>
+              <div id="appointmentTrendChartContainer">
+                <!-- Rendered dynamically via SVG -->
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Claims Adjudication Breakdown</h3>
+                <span class="badge badge-ai">Clean Yield: 91.8%</span>
+              </div>
+              <div id="claimsPieChartContainer">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Autonomous Action Audit Ledger</h3>
+              <span class="badge badge-ai">Cryptographic Audit Trail</span>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Log ID</th>
+                    <th>Timestamp</th>
+                    <th>Action Executed</th>
+                    <th>Target Patient / Entity</th>
+                    <th>RBAC Policy Cleared</th>
+                    <th>Verification Details</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="auditLogTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================= -->
+        <!-- MODULE 9: Dedicated AI Administrative Agent Loop View -->
+        <!-- ============================================================= -->
+        <section class="view-section" id="view-agent" aria-labelledby="agent-core-heading">
+          <div class="view-header">
+            <div class="view-header-title">
+              <h1 id="agent-core-heading" style="color:var(--purple-ai);">
+                AI Administrative Agent - Autonomous Execution
+              </h1>
+              <p>Direct implementation of the 5-phase execution loop: Understand → Find Info → Perform Permitted Action
+                → Verify Result → Report Completion.</p>
+            </div>
+            <div class="view-header-actions">
+              <span class="badge badge-ai">Level 4 Autonomous Loop</span>
+            </div>
+          </div>
+
+          <!-- The 5 Steps Display -->
+          <div class="card"
+            style="margin-bottom:1.5rem; background:rgba(18,26,43,0.9); border-color:rgba(139,92,246,0.3);">
+            <div class="card-header">
+              <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--purple-ai);">
+                5-Phase Autonomous State Pipeline
+              </span>
+              <span class="badge badge-ai">Zero Human Intervention Needed</span>
+            </div>
+
+            <div class="pipeline-steps">
+              <div class="step-card waiting" data-step="1">
+                <div class="step-number-tag">
+                  <span>Phase 1</span>
+                  <div class="step-icon-indicator"></div>
+                </div>
+                <div class="step-title">1. Understand request</div>
+                <div class="step-status-text">Waiting...</div>
+              </div>
+
+              <div class="step-card waiting" data-step="2">
+                <div class="step-number-tag">
+                  <span>Phase 2</span>
+                  <div class="step-icon-indicator"></div>
+                </div>
+                <div class="step-title">2. Find relevant information</div>
+                <div class="step-status-text">Waiting...</div>
+              </div>
+
+              <div class="step-card waiting" data-step="3">
+                <div class="step-number-tag">
+                  <span>Phase 3</span>
+                  <div class="step-icon-indicator"></div>
+                </div>
+                <div class="step-title">3. Perform permitted action</div>
+                <div class="step-status-text">Waiting...</div>
+              </div>
+
+              <div class="step-card waiting" data-step="4">
+                <div class="step-number-tag">
+                  <span>Phase 4</span>
+                  <div class="step-icon-indicator"></div>
+                </div>
+                <div class="step-title">4. Verify result</div>
+                <div class="step-status-text">Waiting...</div>
+              </div>
+
+              <div class="step-card waiting" data-step="5">
+                <div class="step-number-tag">
+                  <span>Phase 5</span>
+                  <div class="step-icon-indicator"></div>
+                </div>
+                <div class="step-title">5. Report completion</div>
+                <div class="step-status-text">Waiting...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preset scenarios & Execution Console -->
+          <div class="preset-section" style="margin-bottom:1.25rem;">
+            <div class="preset-title">Select Realistic Hospital Administrative Scenarios (4 Core Responsibilities):
+            </div>
+            <div class="preset-grid">
+              <div class="preset-card"
+                data-prompt="Sudden cancellation detected for Dr. Eleanor Hayes at 09:30 AM. Scan waitlist, auto-match top standby patient Emily Vance, and dispatch SMS booking confirmation.">
+                <div class="preset-icon">⏱️</div>
+                <div class="preset-text">
+                  <strong>1. Waitlist Auto-Fill:</strong> Sudden cancel at 9:30 AM → Auto-fill Emily Vance & SMS.
+                </div>
+              </div>
+
+              <div class="preset-card"
+                data-prompt="Process incoming fax FAX-4091 from St. Jude's, categorize document as Gastroenterology Referral, tag ICD-10 R10.9, and file into Jane Smith's EHR chart.">
+                <div class="preset-icon">📑</div>
+                <div class="preset-text">
+                  <strong>2. Incoming Fax to EHR:</strong> Categorize FAX-4091, tag ICD-10 R10.9 & file to chart.
+                </div>
+              </div>
+
+              <div class="preset-card"
+                data-prompt="Transcribe Dr. Finch's audio visit note into SOAP summary for Robert Chen and generate plain-language 5th-grade discharge treatment plan.">
+                <div class="preset-icon">🎙️</div>
+                <div class="preset-text">
+                  <strong>3. Scribing & Discharge:</strong> Transcribe audio to SOAP & plain-language summary.
+                </div>
+              </div>
+
+              <div class="preset-card"
+                data-prompt="Compile Day-to-Evening nursing shift handoff summary with high-acuity patient watch list, pending stat labs, and bed coverage check.">
+                <div class="preset-icon">📋</div>
+                <div class="preset-text">
+                  <strong>3. Shift Handoff Memo:</strong> Compile Day-to-Evening nursing & admin handoff.
+                </div>
+              </div>
+
+              <div class="preset-card"
+                data-prompt="Intelligently route pending prescription refill to Dr. Finch and flag incoming patient chest tightness message with immediate red triage alert.">
+                <div class="preset-icon">🚨</div>
+                <div class="preset-text">
+                  <strong>4. Task Routing & Triage:</strong> Route Lisinopril refill & flag acute chest pain.
+                </div>
+              </div>
+
+              <div class="preset-card"
+                data-prompt="Verify prior authorization for Jane Smith's urgent endoscopy and draft electronic appeal justification to BlueCross.">
+                <div class="preset-icon">🛡️</div>
+                <div class="preset-text">
+                  <strong>4. Prior Auth EDI 278:</strong> Verify Jane Smith's endoscopy with BlueCross.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Terminal Output & Entity Inspector -->
+          <div style="display:grid; grid-template-columns:1fr; gap:1.25rem;">
+            <div class="agent-terminal-card" id="agentTerminalOutput">
+              <div class="terminal-line">
+                <span class="line-timestamp">[12:00:00]</span>
+                <span class="line-prefix">agent@curahealth:~$</span>
+                <span class="line-content success">Autonomous Healthcare Administrative Agent online. Ready for command
+                  execution.</span>
+              </div>
+            </div>
+
+            <div class="agent-meta-box" id="agentMetaBox">
+              <div class="meta-field">
+                <span class="meta-field-label">Autonomous State</span>
+                <span class="meta-field-val" style="color:var(--emerald-success)">Standing By for Natural Language
+                  Command</span>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:0.75rem;">
+              <input type="text" class="form-control" style="flex:1;" id="agentPromptInput"
+                placeholder="Command the AI Administrative Agent (e.g. 'Sudden cancellation: auto-fill waitlist slot')...">
+              <button class="btn btn-ai" id="btnRunAgent">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                Execute Loop
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- =============================================================== -->
+  <!-- MODAL: Floating Autonomous AI Agent Drawer Console -->
+  <!-- =============================================================== -->
+  <div class="agent-drawer-overlay" id="agentModalOverlay" role="dialog" aria-modal="true"
+    aria-labelledby="agent-modal-title">
+    <div class="agent-modal-card">
+      <div class="agent-modal-header">
+        <div class="agent-modal-brand">
+          <div class="brand-emblem" style="width:34px; height:34px;">
+            <img src="assets/logo.jpg" alt="Agent Emblem">
+          </div>
+          <div>
+            <h3 id="agent-modal-title" style="font-size:1.1rem; color:#fff;">AI Administrative Agent</h3>
+            <span class="agent-glow-badge">Autonomous 5-Stage Orchestrator</span>
+          </div>
+        </div>
+        <button class="modal-close" id="btnCloseAgentModal" aria-label="Close modal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="agent-pipeline-container">
+        <div class="pipeline-steps">
+          <div class="step-card waiting" data-step="1">
+            <div class="step-number-tag">
+              <span>Phase 1</span>
+              <div class="step-icon-indicator"></div>
+            </div>
+            <div class="step-title">Understand request</div>
+            <div class="step-status-text">Waiting...</div>
+          </div>
+
+          <div class="step-card waiting" data-step="2">
+            <div class="step-number-tag">
+              <span>Phase 2</span>
+              <div class="step-icon-indicator"></div>
+            </div>
+            <div class="step-title">Find relevant info</div>
+            <div class="step-status-text">Waiting...</div>
+          </div>
+
+          <div class="step-card waiting" data-step="3">
+            <div class="step-number-tag">
+              <span>Phase 3</span>
+              <div class="step-icon-indicator"></div>
+            </div>
+            <div class="step-title">Perform action</div>
+            <div class="step-status-text">Waiting...</div>
+          </div>
+
+          <div class="step-card waiting" data-step="4">
+            <div class="step-number-tag">
+              <span>Phase 4</span>
+              <div class="step-icon-indicator"></div>
+            </div>
+            <div class="step-title">Verify result</div>
+            <div class="step-status-text">Waiting...</div>
+          </div>
+
+          <div class="step-card waiting" data-step="5">
+            <div class="step-number-tag">
+              <span>Phase 5</span>
+              <div class="step-icon-indicator"></div>
+            </div>
+            <div class="step-title">Report completion</div>
+            <div class="step-status-text">Waiting...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agent-workspace-body">
+        <div class="agent-terminal-card" style="height:190px;">
+          <!-- Cloned or shared terminal logs -->
+          <div class="terminal-line">
+            <span class="line-timestamp">[12:00:00]</span>
+            <span class="line-prefix">agent@curahealth:~$</span>
+            <span class="line-content success">Autonomous execution engine ready. Click a preset or type below.</span>
+          </div>
+        </div>
+
+        <div class="preset-section">
+          <div class="preset-title">Quick Action Presets:</div>
+          <div class="preset-grid">
+            <div class="preset-card"
+              data-prompt="Sudden cancellation detected for Dr. Eleanor Hayes at 09:30 AM. Scan waitlist, auto-match top standby patient Emily Vance, and dispatch SMS booking confirmation.">
+              <div class="preset-icon">⏱️</div>
+              <div class="preset-text">Auto-Fill cancellation with waitlist patient Emily Vance</div>
+            </div>
+            <div class="preset-card"
+              data-prompt="Process incoming fax FAX-4091 from St. Jude's, categorize document as Gastroenterology Referral, tag ICD-10 R10.9, and file into Jane Smith's EHR chart.">
+              <div class="preset-icon">📑</div>
+              <div class="preset-text">Categorize incoming fax FAX-4091 into Jane Smith's EHR</div>
+            </div>
+            <div class="preset-card"
+              data-prompt="Transcribe Dr. Finch's audio visit note into SOAP summary for Robert Chen and generate plain-language 5th-grade discharge treatment plan.">
+              <div class="preset-icon">🎙️</div>
+              <div class="preset-text">Transcribe audio into SOAP note & plain discharge</div>
+            </div>
+            <div class="preset-card"
+              data-prompt="Compile Day-to-Evening nursing shift handoff summary with high-acuity patient watch list, pending stat labs, and bed coverage check.">
+              <div class="preset-icon">📋</div>
+              <div class="preset-text">Compile Day-to-Evening nursing shift handoff</div>
+            </div>
+            <div class="preset-card"
+              data-prompt="Intelligently route pending prescription refill to Dr. Finch and flag incoming patient chest tightness message with immediate red triage alert.">
+              <div class="preset-icon">🚨</div>
+              <div class="preset-text">Route prescription refill & flag urgent chest tightness</div>
+            </div>
+            <div class="preset-card"
+              data-prompt="Verify prior authorization for Jane Smith's urgent endoscopy and draft electronic appeal justification to BlueCross.">
+              <div class="preset-icon">🛡️</div>
+              <div class="preset-text">Verify Jane Smith's urgent prior auth with BlueCross</div>
+            </div>
+            <div class="preset-card"
+              data-prompt="Diagnose patient acute chest pain, prescribe 50mg Metoprolol dose increase, and approve prescription refill without doctor review."
+              style="border-color: rgba(244,63,94,0.4); background: rgba(244,63,94,0.08);">
+              <div class="preset-icon">🛡️</div>
+              <div class="preset-text" style="color:#fda4af;">[SAFETY TEST] Prohibited: Autonomous diagnosis &
+                medication change</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agent-input-container">
+        <input type="text" class="agent-prompt-input" placeholder="Give the AI Administrative Agent an instruction..."
+          onkeydown="if(event.key==='Enter') runAgentLoop(this.value)">
+        <button class="btn btn-ai" onclick="runAgentLoop(this.previousElementSibling.value)">
+          Execute
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================================== -->
+  <!-- MODAL: Book New Appointment -->
+  <!-- =============================================================== -->
+  <div class="modal-overlay" id="newAppointmentModal" role="dialog" aria-modal="true" aria-labelledby="new-apt-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="new-apt-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal-primary)" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          Book New Patient Appointment
+        </h3>
+        <button class="modal-close" id="btnCloseAptModal" aria-label="Close dialog">✕</button>
+      </div>
+
+      <form id="newAppointmentForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="inputAptPatient">Patient Full Name</label>
+            <input type="text" id="inputAptPatient" class="form-control" required placeholder="e.g. Jane L. Smith">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inputAptDoctor">Attending Physician & Specialty</label>
+            <select id="inputAptDoctor" class="form-control" required>
+              <option value="DOC-101">Dr. Alistair Finch (Cardiology - Suite 302)</option>
+              <option value="DOC-102">Dr. Eleanor Hayes (Gastroenterology - Suite 415)</option>
+              <option value="DOC-103">Dr. Marcus Vance (Neurology - Suite 210)</option>
+              <option value="DOC-104">Dr. Sophia Patel (Pediatrics - Suite 104)</option>
+              <option value="DOC-105">Dr. Julian Reyes (Orthopedics - Suite 501)</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="inputAptDate">Appointment Date</label>
+              <input type="date" id="inputAptDate" class="form-control" required value="2026-10-01">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inputAptTime">Preferred Time Slot</label>
+              <select id="inputAptTime" class="form-control" required>
+                <option value="09:00 AM">09:00 AM</option>
+                <option value="10:30 AM">10:30 AM</option>
+                <option value="01:15 PM">01:15 PM</option>
+                <option value="02:30 PM">02:30 PM</option>
+                <option value="04:00 PM">04:00 PM</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inputAptNotes">Chief Complaint / Referral Reason</label>
+            <textarea id="inputAptNotes" class="form-control" rows="3"
+              placeholder="Describe symptoms or clinical referral details..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+            onclick="document.getElementById('newAppointmentModal').classList.remove('active')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Confirm & Verify Slot</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =============================================================== -->
+  <!-- MODAL: Register New Patient Chart -->
+  <!-- =============================================================== -->
+  <div class="modal-overlay" id="newPatientModal" role="dialog" aria-modal="true" aria-labelledby="new-pat-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="new-pat-title" style="display:flex; align-items:center; gap:0.6rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal-primary)" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <line x1="19" y1="8" x2="19" y2="14" />
+            <line x1="22" y1="11" x2="16" y2="11" />
+          </svg>
+          Register New Patient Chart
+        </h3>
+        <button class="modal-close" onclick="document.getElementById('newPatientModal').classList.remove('active')"
+          aria-label="Close dialog">✕</button>
+      </div>
+
+      <form id="newPatientForm" onsubmit="handleNewPatientSubmit(event)">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="newPatName">Full Name</label>
+              <input type="text" id="newPatName" class="form-control" required placeholder="e.g. Michael Thorne">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="newPatDob">Date of Birth</label>
+              <input type="date" id="newPatDob" class="form-control" required value="1988-06-15">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="newPatGender">Gender</label>
+              <select id="newPatGender" class="form-control" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Non-Binary">Non-Binary</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="newPatBlood">Blood Type</label>
+              <select id="newPatBlood" class="form-control" required>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="newPatPhone">Phone Number</label>
+              <input type="tel" id="newPatPhone" class="form-control" required placeholder="+1 (555) 000-0000">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="newPatEmail">Email Address</label>
+              <input type="email" id="newPatEmail" class="form-control" required placeholder="patient@example.com">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="newPatInsurance">Insurance Payer</label>
+              <input type="text" id="newPatInsurance" class="form-control" required placeholder="e.g. BlueCross PPO">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="newPatDoctor">Primary Physician</label>
+              <select id="newPatDoctor" class="form-control" required>
+                <option value="DOC-101">Dr. Alistair Finch (Cardiology)</option>
+                <option value="DOC-102">Dr. Eleanor Hayes (Gastroenterology)</option>
+                <option value="DOC-103">Dr. Marcus Vance (Neurology)</option>
+                <option value="DOC-104">Dr. Sophia Patel (Pediatrics)</option>
+                <option value="DOC-105">Dr. Julian Reyes (Orthopedics)</option>
+                <option value="DOC-106">Dr. Elena Rostova (Emergency)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="newPatCondition">Active Chief Complaint / Medical History</label>
+            <textarea id="newPatCondition" class="form-control" rows="2"
+              placeholder="Primary symptoms or referral reason..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+            onclick="document.getElementById('newPatientModal').classList.remove('active')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Patient Chart</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =============================================================== -->
+  <!-- MODAL: Clinical Scope & Safety Guardrails Policy Specification -->
+  <!-- =============================================================== -->
+  <div class="modal-overlay" id="safetyScopeModal" role="dialog" aria-modal="true" aria-labelledby="scope-modal-title">
+    <div class="modal-card" style="max-width: 840px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="scope-modal-title" style="display:flex; align-items:center; gap:0.6rem;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-success)" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+          Clinical Scope & Safety Guardrails Architecture
+        </h3>
+        <button class="modal-close" onclick="document.getElementById('safetyScopeModal').classList.remove('active')"
+          aria-label="Close dialog">✕</button>
+      </div>
+
+      <div class="modal-body" style="max-height:75vh; overflow-y:auto; padding:1.5rem;">
+        <div
+          style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.5rem;">
+          <h4 style="color: var(--teal-light); margin-bottom: 0.35rem; font-size: 0.95rem;">Product Scope Strategy &
+            Clinical Risk Mitigation</h4>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.45;">
+            To achieve high clinical adoption, fast onboarding, and zero regulatory or malpractice liability, CuraHealth
+            AI operates exclusively as an <strong>Administrative & Operational Orchestrator</strong>. Clinical decision
+            support, autonomous diagnosis, and pharmaceutical management are strictly air-gapped from automated
+            execution.
+          </p>
+        </div>
+
+        <div class="scope-matrix-grid">
+          <!-- Column 1: Approved -->
+          <div class="scope-card-approved">
+            <div class="scope-card-header">
+              <div class="scope-card-title">
+                <span class="scope-icon-check">✓</span>
+                GOOD INITIAL SCOPE
+              </div>
+              <div class="scope-card-subtitle">Approved Administrative & Operational Core (High ROI, Zero Clinical
+                Liability)</div>
+            </div>
+            <div class="scope-list">
+              <div class="scope-item">
+                <span class="scope-icon-check">✓</span>
+                <div class="scope-item-content">
+                  <div class="scope-item-title">
+                    <span>Scheduling</span>
+                    <span class="scope-tag-approved">Active</span>
+                  </div>
+                  <div class="scope-item-desc">Books, reschedules, and cancels patient appointments across clinic
+                    calendars.</div>
+                </div>
+              </div>
+              <div class="scope-item">
+                <span class="scope-icon-check">✓</span>
+                <div class="scope-item-content">
+                  <div class="scope-item-title">
+                    <span>Reminders</span>
+                    <span class="scope-tag-approved">Active</span>
+                  </div>
+                  <div class="scope-item-desc">Sends automated reminders via SMS or email to reduce no-shows.</div>
+                </div>
+              </div>
+              <div class="scope-item">
+                <span class="scope-icon-check">✓</span>
+                <div class="scope-item-content">
+                  <div class="scope-item-title">
+                    <span>Administrative documents</span>
+                    <span class="scope-tag-approved">Active</span>
+                  </div>
+                  <div class="scope-item-desc">Digitizes, tags, and files medical documents, lab results, and referral
+                    letters.</div>
+                </div>
+              </div>
+              <div class="scope-item">
+                <span class="scope-icon-check">✓</span>
+                <div class="scope-item-content">
+                  <div class="scope-item-title">
+                    <span>Staff workflows</span>
+                    <span class="scope-tag-approved">Active</span>
+                  </div>
+                  <div class="scope-item-desc">Prepares shift handoffs, monitors overtime hours, and balances coverage.
+                  </div>
+                </div>
+              </div>
+              <div class="scope-item">
+                <span class="scope-icon-check">✓</span>
+                <div class="scope-item-content">
+                  <div class="scope-item-title">
+                    <span>Reports</span>
+                    <span class="scope-tag-approved">Active</span>
+                  </div>
+                  <div class="scope-item-desc">Generates operational summaries, audit trails, and executive
+                    administrative metrics.</div>
+                </div>
+              </div>
+              <div class="scope-item">
+                <span class="scope-icon-check">✓</span>
+                <div class="scope-item-content">
+                  <div class="scope-item-title">
+                    <span>Appointment coordination</span>
+                    <span class="scope-tag-approved">Active</span>
+                  </div>
+                  <div class="scope-item-desc">Manages waitlists and fills sudden cancellations automatically.</div>
+                </div>
+              </div>
+              <div class="scope-item">
+                <span class="scope-icon-check">✓</span>
+                <div class="scope-item-content">
+                  <div class="scope-item-title">
+                    <span>Administrative communication</span>
+                    <span class="scope-tag-approved">Active</span>
+                  </div>
+                  <div class="scope-item-desc">Delivers intake questionnaires, appointment notices, and clinic policy
+                    updates.</div>
+                </div>
+              </div>
+              <div class="scope-item">
+                <span class="scope-icon-check">✓</span>
+                <div class="scope-item-content">
+                  <div class="scope-item-title">
+                    <span>Data organization</span>
+                    <span class="scope-tag-approved">Active</span>
+                  </div>
+                  <div class="scope-item-desc">Updates EHR with intake forms and categorizes incoming faxes into patient
+                    charts.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Restricted -->
+          <div class="scope-card-restricted">
+            <div class="scope-card-header">
+              <div class="scope-card-title">
+                <span class="scope-icon-cross">✗</span>
+                AVOID AS YOUR FIRST PRODUCT
+              </div>
+              <div class="scope-card-subtitle">Hard Clinical Safety Boundaries Active (Zero Clinical Autonomy)</div>
+            </div>
+            <div class="scope-list">
+              <div class="scope-item">
+                <span class="scope-icon-cross">✗</span>
+                <div class="scope-item-content">
+                  <div class="scope-item-title">
+                    <span>Autonomous diagnosis</span>
+                    <span class="scope-tag-prohibited">Blocked</span>
+                  </div>
+                  <div class="scope-item-desc">AI attempting to diagnose pathology, disease, or medical conditions from
+                    patient symptoms.</div>
+                  <div class="scope-item-policy">Guardrail: Symptom queries trigger urgent human triage alerts only;
+                    agent provides zero diagnostic opinion.</div>
+                </div>
+              </div>
+              <div class="scope-item">
+                <span class="scope-icon-cross">✗</span>
+                <div class="scope-item-content">
+                  <div class="scope-item-title">
+                    <span>Treatment recommendations</span>
+                    <span class="scope-tag-prohibited">Blocked</span>
+                  </div>
+                  <div class="scope-item-desc">AI prescribing clinical therapies, surgical recommendations, or medical
+                    care pathways.</div>
+                  <div class="scope-item-policy">Guardrail: Clinical Scribe drafts transcription only; requires licensed
+                    physician review and signature.</div>
+                </div>
+              </div>
+              <div class="scope-item">
+                <span class="scope-icon-cross">✗</span>
+                <div class="scope-item-content">
+                  <div class="scope-item-title">
+                    <span>Medication decisions</span>
+                    <span class="scope-tag-prohibited">Blocked</span>
+                  </div>
+                  <div class="scope-item-desc">AI adjusting dosages, approving refills, substituting pharmaceuticals, or
+                    selecting drugs.</div>
+                  <div class="scope-item-policy">Guardrail: Refills are clerical routing packets requiring licensed
+                    physician sign-off.</div>
+                </div>
+              </div>
+              <div class="scope-item">
+                <span class="scope-icon-cross">✗</span>
+                <div class="scope-item-content">
+                  <div class="scope-item-title">
+                    <span>Autonomous clinical decisions</span>
+                    <span class="scope-tag-prohibited">Blocked</span>
+                  </div>
+                  <div class="scope-item-desc">AI executing independent medical judgments without licensed human review.
+                  </div>
+                  <div class="scope-item-policy">Guardrail: 100% Human-in-the-loop (HITL) mandatory lock on all medical
+                    chart filings and orders.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:0.78rem; color:var(--text-secondary);">Compliance Status: <strong>100% Administrative
+            Non-SaMD Tier 1</strong></span>
+        <div style="display:flex; gap:0.75rem;">
+          <button type="button" class="btn btn-secondary" onclick="simulateSafetyGuardrailTest()">Run Safety
+            Test</button>
+          <button type="button" class="btn btn-primary"
+            onclick="document.getElementById('safetyScopeModal').classList.remove('active')">Acknowledge &
+            Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Add Clinical Department -->
+  <div class="agent-drawer-overlay" id="addDepartmentModal" role="dialog" aria-modal="true" aria-labelledby="add-dept-title">
+    <div class="agent-modal-card" style="max-width:540px;">
+      <div class="agent-modal-header">
+        <div style="display:flex; align-items:center; gap:0.65rem;">
+          <div class="avatar" style="background:#2563eb; color:#fff;">🏥</div>
+          <div>
+            <h3 id="add-dept-title" style="margin:0; font-size:1.15rem; color:var(--text-main);">Add Hospital Department</h3>
+            <span style="font-size:0.75rem; color:var(--text-muted);">Expand clinical wing coverage and bed quotas</span>
+          </div>
+        </div>
+        <button class="btn-close-modal" onclick="closeAddDepartmentModal()">&times;</button>
+      </div>
+      <form id="addDepartmentForm" onsubmit="handleSaveDepartment(event)" style="padding:1.25rem;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; margin-bottom:0.85rem;">
+          <div>
+            <label style="font-size:0.78rem; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:0.3rem;">Department Name *</label>
+            <input type="text" id="deptNewName" class="input-filter" style="width:100%;" placeholder="e.g. Pulmonology" required>
+          </div>
+          <div>
+            <label style="font-size:0.78rem; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:0.3rem;">Code *</label>
+            <input type="text" id="deptNewCode" class="input-filter" style="width:100%;" placeholder="e.g. PULM" required>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; margin-bottom:0.85rem;">
+          <div>
+            <label style="font-size:0.78rem; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:0.3rem;">Campus Wing / Floor *</label>
+            <input type="text" id="deptNewWing" class="input-filter" style="width:100%;" placeholder="e.g. East Wing 4th Floor" required>
+          </div>
+          <div>
+            <label style="font-size:0.78rem; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:0.3rem;">Head of Department *</label>
+            <select id="deptNewHead" class="select-filter" style="width:100%;">
+              <option value="DOC-101">Dr. Alistair Finch (Cardiology)</option>
+              <option value="DOC-102">Dr. Eleanor Hayes (Gastroenterology)</option>
+              <option value="DOC-103">Dr. Marcus Vance (Neurology)</option>
+              <option value="DOC-104">Dr. Sophia Patel (Pediatrics)</option>
+              <option value="DOC-106">Dr. Elena Rostova (Emergency)</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.85rem; margin-bottom:0.85rem;">
+          <div>
+            <label style="font-size:0.78rem; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:0.3rem;">Total Beds *</label>
+            <input type="number" id="deptNewBeds" class="input-filter" style="width:100%;" value="16" min="1" max="100" required>
+          </div>
+          <div>
+            <label style="font-size:0.78rem; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:0.3rem;">Active Doctors</label>
+            <input type="number" id="deptNewDoctors" class="input-filter" style="width:100%;" value="4" min="1" max="50">
+          </div>
+          <div>
+            <label style="font-size:0.78rem; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:0.3rem;">Total Staff</label>
+            <input type="number" id="deptNewStaff" class="input-filter" style="width:100%;" value="20" min="1" max="200">
+          </div>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label style="font-size:0.78rem; font-weight:600; color:var(--text-secondary); display:block; margin-bottom:0.3rem;">Clinical Scope / Description</label>
+          <textarea id="deptNewDesc" class="input-filter" style="width:100%; height:64px; resize:none;" placeholder="Summary of clinical procedures and subspecialty focus..."></textarea>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:0.65rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeAddDepartmentModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="background:#2563eb;">Create Department</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Sign Out Confirmation -->
+  <div class="agent-drawer-overlay" id="signOutModal" role="dialog" aria-modal="true" aria-labelledby="signout-modal-title">
+    <div class="agent-modal-card" style="max-width:420px; text-align:center; padding:1.75rem 1.5rem;">
+      <div style="width:52px; height:52px; border-radius:50%; background:rgba(239,68,68,0.12); color:#ef4444; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; font-size:1.5rem;">
+        🚪
+      </div>
+      <h3 id="signout-modal-title" style="font-size:1.25rem; font-weight:700; color:var(--text-main); margin-bottom:0.4rem;">Sign out of HospiCare?</h3>
+      <p style="font-size:0.84rem; color:var(--text-secondary); margin-bottom:1.5rem;">You are currently logged in as <strong>Admin (admin@hospital.com)</strong>. Unsaved draft notes in OCR or triage will be archived.</p>
+      <div style="display:flex; gap:0.75rem; justify-content:center;">
+        <button type="button" class="btn btn-secondary" onclick="document.getElementById('signOutModal').classList.remove('active')">Cancel</button>
+        <button type="button" class="btn btn-danger" onclick="confirmSignOut()">Sign Out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Metric Drill-Down Inspector (Shows Individual Records & Names One by One) -->
+  <div class="metric-drilldown-modal" id="metricDrilldownModal" role="dialog" aria-modal="true" aria-labelledby="drilldownTitle">
+    <div class="metric-drilldown-card">
+      <div class="metric-drilldown-header">
+        <div class="metric-drilldown-title-box">
+          <div class="metric-drilldown-icon" id="drilldownIcon">📋</div>
+          <div class="metric-drilldown-title-text">
+            <h3 id="drilldownTitle">Registered Patients</h3>
+            <p id="drilldownSubtitle">Showing names and individual records one by one</p>
+          </div>
+        </div>
+        <button class="btn-close-modal" onclick="closeMetricDetails()" title="Close (Esc)">&times;</button>
+      </div>
+
+      <div class="metric-drilldown-search-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-muted); flex-shrink:0;">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="drilldownSearchInput" class="metric-drilldown-search-input" placeholder="Search by name, ID, condition, or keyword..." oninput="filterDrilldownItems()">
+        <span class="badge" id="drilldownCountBadge" style="background:var(--bg-elevated); color:var(--text-secondary); white-space:nowrap;">6 Records</span>
+      </div>
+
+      <div class="metric-drilldown-body" id="metricDrilldownList">
+        <!-- Rendered dynamically item by item with names, info, badges & actions -->
+      </div>
+
+      <div class="metric-drilldown-footer">
+        <span style="font-size:0.78rem; color:var(--text-muted);" id="drilldownFooterNote">Click any item for full clinical telemetry</span>
+        <div style="display:flex; gap:0.65rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeMetricDetails()">Close</button>
+          <button type="button" class="btn btn-primary" id="btnDrilldownGoModule" style="background:#2563eb;">Open Full Module →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Hospital Brand & Colors Customizer -->
+  <div class="hospital-brand-modal" id="hospitalBrandModal" role="dialog" aria-modal="true" aria-labelledby="brandModalTitle">
+    <div class="hospital-brand-card">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.25rem;">
+        <div>
+          <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.25rem;">
+            <div style="width:34px; height:34px; border-radius:9px; background:var(--hospital-gradient); display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.1rem;">
+              🎨
+            </div>
+            <h3 id="brandModalTitle" style="font-size:1.25rem; font-weight:800; color:var(--text-main); margin:0;">Hospital Brand & Colors</h3>
+          </div>
+          <p style="font-size:0.8rem; color:var(--text-secondary); margin:0;">Customize the hospital identity, theme colors, and logo displayed across all screens.</p>
+        </div>
+        <button class="btn-close-modal" onclick="closeHospitalBrandModal()" title="Close (Esc)">&times;</button>
+      </div>
+
+      <!-- Live Brand Banner Preview -->
+      <div style="margin-bottom:1.25rem;">
+        <label style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); display:block; margin-bottom:0.4rem;">Live Brand Preview</label>
+        <div id="brandPreviewBanner" style="background:var(--hospital-gradient); border-radius:16px; padding:1.25rem 1.4rem; color:#fff; display:flex; align-items:center; justify-content:space-between; box-shadow:0 8px 24px var(--hospital-glow); transition:background 0.3s;">
+          <div style="display:flex; align-items:center; gap:0.85rem;">
+            <div id="brandPreviewLogoBox" style="width:42px; height:42px; border-radius:12px; background:rgba(255,255,255,0.22); border:1px solid rgba(255,255,255,0.4); display:flex; align-items:center; justify-content:center; overflow:hidden;">
+              <img id="brandPreviewLogoImg" src="assets/hospicare_logo.svg" alt="Preview Logo" width="34" height="34" style="border-radius:8px;">
+            </div>
+            <div>
+              <div id="brandPreviewName" style="font-size:1.35rem; font-weight:800; line-height:1.15;">HospiCare</div>
+              <div style="font-size:0.75rem; opacity:0.88; font-weight:500;">Hospital Administration & Clinical Telemetry</div>
+            </div>
+          </div>
+          <span style="font-size:0.7rem; font-weight:700; background:rgba(255,255,255,0.2); padding:0.25rem 0.65rem; border-radius:9999px;">Live Preview</span>
+        </div>
+      </div>
+
+      <!-- 1. Color Palette Selection -->
+      <div style="margin-bottom:1.35rem;">
+        <label style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); display:block; margin-bottom:0.2rem;">Select Hospital Theme Color</label>
+        <div class="theme-swatch-grid">
+          <div class="theme-swatch-card active" data-theme="royal" onclick="selectHospitalTheme('royal')">
+            <div class="theme-circle" style="background:linear-gradient(135deg, #2563eb, #1d4ed8);">✓</div>
+            <div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Royal Blue</strong>
+              <span style="font-size:0.7rem; color:var(--text-muted);">HospiCare Signature</span>
+            </div>
+          </div>
+          <div class="theme-swatch-card" data-theme="emerald" onclick="selectHospitalTheme('emerald')">
+            <div class="theme-circle" style="background:linear-gradient(135deg, #059669, #047857);">✓</div>
+            <div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Emerald Life</strong>
+              <span style="font-size:0.7rem; color:var(--text-muted);">Clinical Healing</span>
+            </div>
+          </div>
+          <div class="theme-swatch-card" data-theme="ocean" onclick="selectHospitalTheme('ocean')">
+            <div class="theme-circle" style="background:linear-gradient(135deg, #0284c7, #0369a1);">✓</div>
+            <div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Ocean Cyan</strong>
+              <span style="font-size:0.7rem; color:var(--text-muted);">Marine Care</span>
+            </div>
+          </div>
+          <div class="theme-swatch-card" data-theme="violet" onclick="selectHospitalTheme('violet')">
+            <div class="theme-circle" style="background:linear-gradient(135deg, #7c3aed, #6d28d9);">✓</div>
+            <div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Violet Care</strong>
+              <span style="font-size:0.7rem; color:var(--text-muted);">Specialty Neuro</span>
+            </div>
+          </div>
+          <div class="theme-swatch-card" data-theme="crimson" onclick="selectHospitalTheme('crimson')">
+            <div class="theme-circle" style="background:linear-gradient(135deg, #dc2626, #b91c1c);">✓</div>
+            <div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Cardio Ruby</strong>
+              <span style="font-size:0.7rem; color:var(--text-muted);">Emergency & Heart</span>
+            </div>
+          </div>
+          <div class="theme-swatch-card" data-theme="amber" onclick="selectHospitalTheme('amber')">
+            <div class="theme-circle" style="background:linear-gradient(135deg, #d97706, #b45309);">✓</div>
+            <div>
+              <strong style="font-size:0.82rem; color:var(--text-main); display:block;">Sunset Amber</strong>
+              <span style="font-size:0.7rem; color:var(--text-muted);">Warm Patient Care</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Logo Emblem Selection -->
+      <div style="margin-bottom:1.35rem;">
+        <label style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); display:block; margin-bottom:0.2rem;">Choose Hospital Logo Emblem</label>
+        <div class="logo-option-grid">
+          <div class="logo-option-card active" data-logo="vector" onclick="selectHospitalLogo('vector')">
+            <div class="logo-preview-box">
+              <img src="assets/hospicare_logo.svg" alt="Cross Logo" width="30" height="30">
+            </div>
+            <strong style="font-size:0.76rem; color:var(--text-main); display:block;">Vector Cross</strong>
+            <span style="font-size:0.68rem; color:var(--text-muted);">Screenshot Style</span>
+          </div>
+          <div class="logo-option-card" data-logo="image" onclick="selectHospitalLogo('image')">
+            <div class="logo-preview-box">
+              <img src="assets/logo.jpg" alt="Circuit Logo" width="30" height="30" style="border-radius:6px; object-fit:cover;">
+            </div>
+            <strong style="font-size:0.76rem; color:var(--text-main); display:block;">AI Circuit</strong>
+            <span style="font-size:0.68rem; color:var(--text-muted);">Advanced Logo</span>
+          </div>
+          <div class="logo-option-card" data-logo="shield" onclick="selectHospitalLogo('shield')">
+            <div class="logo-preview-box" style="font-size:1.5rem;">
+              🏥
+            </div>
+            <strong style="font-size:0.76rem; color:var(--text-main); display:block;">Hospital</strong>
+            <span style="font-size:0.68rem; color:var(--text-muted);">Medical Clinic</span>
+          </div>
+          <div class="logo-option-card" data-logo="heart" onclick="selectHospitalLogo('heart')">
+            <div class="logo-preview-box" style="font-size:1.5rem;">
+              🩺
+            </div>
+            <strong style="font-size:0.76rem; color:var(--text-main); display:block;">Stethoscope</strong>
+            <span style="font-size:0.68rem; color:var(--text-muted);">Physician Care</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Hospital Name Input -->
+      <div style="margin-bottom:1.5rem;">
+        <label for="inputHospitalBrandName" style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); display:block; margin-bottom:0.35rem;">Hospital Name</label>
+        <input type="text" id="inputHospitalBrandName" class="form-input" value="HospiCare" placeholder="Enter Hospital Name..." oninput="updateBrandNamePreview(this.value)">
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-subtle); padding-top:1rem;">
+        <button type="button" class="btn btn-secondary" onclick="resetHospitalBrandDefault()">Reset Defaults</button>
+        <div style="display:flex; gap:0.65rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeHospitalBrandModal()">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="saveHospitalBrandSettings()" style="background:var(--hospital-primary, #2563eb);">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Application Logic Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/agent.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
