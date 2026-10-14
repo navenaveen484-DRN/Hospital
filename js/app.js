@@ -266,6 +266,27 @@ function setupThemeToggle() {
 }
 
 // --------------------------------------------------------------------------
+// Security: HTML Sanitization Utility & Global Error Boundary
+// --------------------------------------------------------------------------
+function escapeHtml(str) {
+  if (str === null || str === undefined) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+window.escapeHtml = escapeHtml;
+
+window.addEventListener("error", (event) => {
+  console.error("HospiCare Unhandled Error:", event.error || event.message);
+});
+window.addEventListener("unhandledrejection", (event) => {
+  console.error("HospiCare Unhandled Promise Rejection:", event.reason);
+});
+
+// --------------------------------------------------------------------------
 // Global Toast Notifications
 // --------------------------------------------------------------------------
 function showToast(title, message, type = "info") {
@@ -287,8 +308,8 @@ function showToast(title, message, type = "info") {
   toast.innerHTML = `
     <div style="flex-shrink:0; padding-top:2px;">${iconSvg}</div>
     <div class="toast-content">
-      <div class="toast-title">${title}</div>
-      <div class="toast-msg">${message}</div>
+      <div class="toast-title">${escapeHtml(title)}</div>
+      <div class="toast-msg">${escapeHtml(message)}</div>
     </div>
   `;
 
@@ -298,7 +319,13 @@ function showToast(title, message, type = "info") {
     toast.style.transition = "all 0.3s ease";
     toast.style.opacity = "0";
     toast.style.transform = "translateX(50px)";
-    setTimeout(() => toast.remove(), 300);
+    setTimeout(() => {
+      if (typeof toast.remove === "function") {
+        toast.remove();
+      } else if (toast && toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300);
   }, 4000);
 }
 
@@ -499,37 +526,37 @@ function renderAppointments() {
         <div class="user-cell">
           <div class="avatar avatar-sm">${apt.patientName.split(" ").map(n => n[0]).join("")}</div>
           <div class="user-cell-meta">
-            <span class="user-cell-name">${apt.patientName}</span>
-            <span class="user-cell-sub">${apt.id} • ${apt.triageScore}</span>
+            <span class="user-cell-name">${escapeHtml(apt.patientName)}</span>
+            <span class="user-cell-sub">${escapeHtml(apt.id)} • ${escapeHtml(apt.triageScore)}</span>
           </div>
         </div>
       </td>
       <td>
-        <strong>${apt.doctorName}</strong>
-        <div class="user-cell-sub">${apt.specialty} • ${apt.room}</div>
+        <strong>${escapeHtml(apt.doctorName)}</strong>
+        <div class="user-cell-sub">${escapeHtml(apt.specialty)} • ${escapeHtml(apt.room)}</div>
       </td>
       <td>
-        <strong>${apt.time}</strong>
-        <div class="user-cell-sub">${apt.date} (${apt.duration})</div>
+        <strong>${escapeHtml(apt.time)}</strong>
+        <div class="user-cell-sub">${escapeHtml(apt.date)} (${escapeHtml(apt.duration)})</div>
       </td>
       <td>
         <span class="badge badge-${apt.status.toLowerCase().replace(" ", "-")}">
           <span class="badge-dot" style="background: currentColor;"></span>
-          ${apt.status}
+          ${escapeHtml(apt.status)}
         </span>
       </td>
       <td>
-        <div style="font-size:0.78rem; max-width:240px; color:var(--text-secondary);">${apt.notes}</div>
+        <div style="font-size:0.78rem; max-width:240px; color:var(--text-secondary);">${escapeHtml(apt.notes)}</div>
       </td>
       <td>
         <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-          <button class="btn btn-sm btn-secondary" onclick="quickCheckIn('${apt.id}')" title="Mark Patient Checked In">
+          <button class="btn btn-sm btn-secondary" onclick="quickCheckIn('${escapeHtml(apt.id)}')" title="Mark Patient Checked In">
             Check In
           </button>
-          <button class="btn btn-sm btn-ai" onclick="agentQuickReschedule('${apt.patientName}')" title="AI Reschedule Assist">
+          <button class="btn btn-sm btn-ai" onclick="agentQuickReschedule('${escapeHtml(apt.patientName).replace(/'/g, "\\'")}')" title="AI Reschedule Assist">
             Reschedule
           </button>
-          <button class="btn btn-sm btn-danger" onclick="cancelAppointmentAndAutoFill('${apt.id}')" title="Cancel & Auto-Fill from Waitlist">
+          <button class="btn btn-sm btn-danger" onclick="cancelAppointmentAndAutoFill('${escapeHtml(apt.id)}')" title="Cancel & Auto-Fill from Waitlist">
             Cancel & Fill
           </button>
         </div>
@@ -695,10 +722,10 @@ function renderActiveChatThread() {
     threadContainer.innerHTML = activeMsg.thread.map(item => `
       <div class="message-bubble ${item.sender}">
         <div style="font-size:0.7rem; font-weight:700; margin-bottom:0.2rem; opacity:0.8;">
-          ${item.sender === 'patient' ? activeMsg.patientName : (item.sender === 'ai-bot' ? 'CuraHealth AI Agent' : 'Clinic Staff')}
+          ${item.sender === 'patient' ? escapeHtml(activeMsg.patientName) : (item.sender === 'ai-bot' ? 'CuraHealth AI Agent' : 'Clinic Staff')}
         </div>
-        <div>${item.text}</div>
-        <div class="message-time">${item.time}</div>
+        <div>${escapeHtml(item.text)}</div>
+        <div class="message-time">${escapeHtml(item.time)}</div>
       </div>
     `).join("");
     threadContainer.scrollTop = threadContainer.scrollHeight;
@@ -2112,28 +2139,28 @@ function renderPatients() {
           <div style="display:flex; align-items:center; gap:0.75rem;">
             <div class="patient-avatar-box">${initials}</div>
             <div>
-              <div class="patient-name-title">${pat.name}</div>
-              <span class="patient-mrn-badge">${pat.mrn}</span>
+              <div class="patient-name-title">${escapeHtml(pat.name)}</div>
+              <span class="patient-mrn-badge">${escapeHtml(pat.mrn)}</span>
             </div>
           </div>
-          <span class="badge ${statusClass}">${pat.status}</span>
+          <span class="badge ${statusClass}">${escapeHtml(pat.status)}</span>
         </div>
 
         <div class="patient-vitals-bar">
           <div class="vital-item">
-            <span class="vital-val">${pat.vitals?.bp || "120/80"}</span>
+            <span class="vital-val">${escapeHtml(pat.vitals?.bp || "120/80")}</span>
             <span class="vital-label">BP (mmHg)</span>
           </div>
           <div class="vital-item">
-            <span class="vital-val">${pat.vitals?.hr || 72}</span>
+            <span class="vital-val">${escapeHtml(pat.vitals?.hr || 72)}</span>
             <span class="vital-label">Pulse (bpm)</span>
           </div>
           <div class="vital-item">
-            <span class="vital-val">${pat.vitals?.o2 || "99%"}</span>
+            <span class="vital-val">${escapeHtml(pat.vitals?.o2 || "99%")}</span>
             <span class="vital-label">SpO2</span>
           </div>
           <div class="vital-item">
-            <span class="vital-val" style="color:var(--rose-danger);">${pat.bloodType || "O+"}</span>
+            <span class="vital-val" style="color:var(--rose-danger);">${escapeHtml(pat.bloodType || "O+")}</span>
             <span class="vital-label">Blood</span>
           </div>
         </div>
@@ -2141,34 +2168,34 @@ function renderPatients() {
         <div class="patient-info-list">
           <div class="patient-info-row">
             <span>Age / Gender:</span>
-            <strong>${pat.age || 40}y, ${pat.gender}</strong>
+            <strong>${escapeHtml(pat.age || 40)}y, ${escapeHtml(pat.gender)}</strong>
           </div>
           <div class="patient-info-row">
             <span>Primary Doctor:</span>
-            <strong style="color:var(--teal-light);">${pat.assignedDoctor}</strong>
+            <strong style="color:var(--teal-light);">${escapeHtml(pat.assignedDoctor)}</strong>
           </div>
           <div class="patient-info-row">
             <span>Location / Room:</span>
-            <strong>${pat.room || "Outpatient Desk"}</strong>
+            <strong>${escapeHtml(pat.room || "Outpatient Desk")}</strong>
           </div>
           <div class="patient-info-row">
             <span>Payer & Copay:</span>
-            <span>${pat.insurance} (${pat.copay || "$20"})</span>
+            <span>${escapeHtml(pat.insurance)} (${escapeHtml(pat.copay || "$20")})</span>
           </div>
           <div style="margin-top:0.35rem; padding:0.4rem 0.6rem; background:var(--bg-card); border-radius:var(--radius-sm); border-left:2px solid var(--teal-primary);">
             <span style="font-size:0.7rem; color:var(--text-muted); display:block;">Active Clinical Note:</span>
-            <span style="color:var(--text-main); font-size:0.75rem; line-height:1.35;">${pat.activeCondition}</span>
+            <span style="color:var(--text-main); font-size:0.75rem; line-height:1.35;">${escapeHtml(pat.activeCondition)}</span>
           </div>
         </div>
 
         <div class="patient-card-footer">
-          <button class="btn btn-sm btn-secondary" onclick="openEhrChart('${pat.id}')" style="flex:1;" title="View electronic health record">
+          <button class="btn btn-sm btn-secondary" onclick="openEhrChart('${escapeHtml(pat.id)}')" style="flex:1;" title="View electronic health record">
             📂 Chart
           </button>
-          <button class="btn btn-sm btn-primary" onclick="quickBookPatient('${pat.name}', '${pat.doctorId}')" style="flex:1;" title="Book consultation">
+          <button class="btn btn-sm btn-primary" onclick="quickBookPatient('${escapeHtml(pat.name).replace(/'/g, "\\'")}', '${escapeHtml(pat.doctorId)}')" style="flex:1;" title="Book consultation">
             📅 Book
           </button>
-          <button class="btn btn-sm btn-secondary" onclick="quickMessagePatient('${pat.name}')" style="padding:0.35rem 0.6rem;" title="Send SMS message">
+          <button class="btn btn-sm btn-secondary" onclick="quickMessagePatient('${escapeHtml(pat.name).replace(/'/g, "\\'")}')" style="padding:0.35rem 0.6rem;" title="Send SMS message">
             💬
           </button>
         </div>
@@ -3773,6 +3800,55 @@ window.updateBrandNamePreview = updateBrandNamePreview;
 window.saveHospitalBrandSettings = saveHospitalBrandSettings;
 window.resetHospitalBrandDefault = resetHospitalBrandDefault;
 window.loadSavedHospitalBrand = loadSavedHospitalBrand;
+
+// ===============================================================
+// ENTERPRISE REGULATORY & COMPLIANCE MODAL SYSTEM
+// ===============================================================
+function openComplianceModal(tabId = 'privacy') {
+  const modal = document.getElementById('complianceModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    switchComplianceTab(tabId);
+  }
+}
+
+function closeComplianceModal() {
+  const modal = document.getElementById('complianceModal');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+}
+
+function switchComplianceTab(tabId) {
+  const tabButtons = document.querySelectorAll('.compliance-tab-btn');
+  const tabPanels = document.querySelectorAll('.compliance-tab-content');
+
+  tabButtons.forEach(btn => btn.classList.remove('active'));
+  tabPanels.forEach(panel => panel.classList.remove('active'));
+
+  const activeBtn = document.getElementById(`tabBtn${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`);
+  const activePanel = document.getElementById(`complianceTab-${tabId}`);
+
+  if (activeBtn) activeBtn.classList.add('active');
+  if (activePanel) activePanel.classList.add('active');
+}
+
+// Attach backdrop listener for compliance modal
+document.addEventListener("DOMContentLoaded", () => {
+  const compModal = document.getElementById("complianceModal");
+  if (compModal) {
+    compModal.addEventListener("click", (e) => {
+      if (e.target === compModal) {
+        closeComplianceModal();
+      }
+    });
+  }
+});
+
+window.openComplianceModal = openComplianceModal;
+window.closeComplianceModal = closeComplianceModal;
+window.switchComplianceTab = switchComplianceTab;
+
 
 
 

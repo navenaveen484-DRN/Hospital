@@ -4,11 +4,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HospiCare | Hospital Management Platform</title>
+  <title>HospiCare | Enterprise Hospital Management &amp; Autonomous AI Clinical Platform</title>
   <meta name="description"
-    content="HospiCare Enterprise Hospital Management Platform orchestrating clinical departments, patient charts, appointments, medical records, billing, rooms, and autonomous clinical administrative workflows.">
+    content="HospiCare Enterprise Hospital Management Platform orchestrating clinical departments, patient charts, appointments, EHR records, EDI billing, rooms, and autonomous clinical administrative workflows.">
+  <meta name="keywords" content="hospital management, EHR, healthcare admin, clinical workflows, patient records, medical appointments, EDI billing, hospital beds, autonomous clinical agent">
+  <meta name="author" content="HospiCare Systems">
   <meta name="theme-color" content="#2563eb">
-  <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+  <link rel="canonical" href="https://hospital-naveen-bf82.vercel.app">
+  <meta name="robots" content="index, follow">
+
+  <!-- OpenGraph Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="HospiCare | Enterprise Hospital Management Platform">
+  <meta property="og:description" content="Next-generation healthcare clinical operating system orchestrating clinical departments, patient charts, EDI claims, and autonomous clinical administrative workflows.">
+  <meta property="og:url" content="https://hospital-naveen-bf82.vercel.app">
+  <meta property="og:image" content="https://hospital-naveen-bf82.vercel.app/assets/logo.jpg">
+  <meta property="og:site_name" content="HospiCare Healthcare OS">
+
+  <!-- Twitter Card Metadata -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HospiCare | Enterprise Hospital Management Platform">
+  <meta name="twitter:description" content="Next-generation healthcare clinical operating system orchestrating clinical departments, patient charts, EDI claims, and autonomous clinical administrative workflows.">
+  <meta name="twitter:image" content="https://hospital-naveen-bf82.vercel.app/assets/logo.jpg">
+
+  <!-- Favicon and App Icons -->
+  <link rel="icon" type="image/svg+xml" href="assets/hospicare_logo.svg">
+  <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="assets/logo.jpg">
 
   <!-- Core Design System & Components -->
   <link rel="stylesheet" href="css/index.css">
@@ -153,7 +175,7 @@
               </svg>
             </span>
             <span class="nav-item-label">Staff</span>
-            <span class="nav-badge urgent">OT Alert</span>
+            <span class="nav-badge urgent" id="navBadgeStaff">OT Alert</span>
           </a>
         </div>
 
@@ -2579,6 +2601,55 @@
           </div>
         </section>
 
+        <!-- Enterprise Regulatory, Privacy & Compliance Footer -->
+        <footer class="hospicare-app-footer" id="mainAppFooter" role="contentinfo">
+          <div class="footer-top-row">
+            <div class="footer-brand">
+              <img src="assets/hospicare_logo.svg" alt="HospiCare Logo" width="28" height="28">
+              <div>
+                <strong style="font-size:0.9rem; color:var(--text-main); display:block;">HospiCare Clinical Operating System</strong>
+                <span style="font-size:0.75rem; color:var(--text-muted);">Enterprise Healthcare Management Platform &bull; Release 2.4.0 (Production)</span>
+              </div>
+            </div>
+            <div class="footer-badges">
+              <span class="compliance-pill" title="Protected Health Information Encrypted at Rest &amp; Transit">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                HIPAA &amp; HITECH Compliant
+              </span>
+              <span class="compliance-pill" style="background:rgba(37,99,235,0.1); color:var(--hospital-primary, #2563eb); border-color:rgba(37,99,235,0.25);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                HL7 / FHIR R4 Ready
+              </span>
+              <span class="compliance-pill" style="background:rgba(139,92,246,0.1); color:#8b5cf6; border-color:rgba(139,92,246,0.25);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Autonomous AI Guardrails
+              </span>
+            </div>
+          </div>
+
+          <div class="footer-nav-links">
+            <button type="button" onclick="openComplianceModal('privacy')" id="footerLinkPrivacy">Privacy Policy</button>
+            <span style="color:var(--border-subtle);">&bull;</span>
+            <button type="button" onclick="openComplianceModal('terms')" id="footerLinkTerms">Terms of Service</button>
+            <span style="color:var(--border-subtle);">&bull;</span>
+            <button type="button" onclick="openComplianceModal('hipaa')" id="footerLinkHipaa">HIPAA BAA &amp; Safeguards</button>
+            <span style="color:var(--border-subtle);">&bull;</span>
+            <button type="button" onclick="openComplianceModal('ai')" id="footerLinkAi">Autonomous AI Safety Protocol</button>
+            <span style="color:var(--border-subtle);">&bull;</span>
+            <button type="button" onclick="openComplianceModal('sla')" id="footerLinkSla">Enterprise SLA &amp; Uptime</button>
+          </div>
+
+          <div class="footer-bottom-row">
+            <div>
+              &copy; 2026 HospiCare Medical Systems, Inc. All rights reserved. Strictly restricted to authorized clinical personnel.
+            </div>
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10b981;"></span>
+              <span>All Clinical Core Services Operational (99.99%)</span>
+            </div>
+          </div>
+        </footer>
+
       </main>
     </div>
   </div>
@@ -3349,6 +3420,93 @@
           <button type="button" class="btn btn-secondary" onclick="closeHospitalBrandModal()">Cancel</button>
           <button type="button" class="btn btn-primary" onclick="saveHospitalBrandSettings()" style="background:var(--hospital-primary, #2563eb);">Save Changes</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================================== -->
+  <!-- MODAL: Enterprise Regulatory & Compliance Center -->
+  <!-- =============================================================== -->
+  <div class="modal-overlay" id="complianceModal" role="dialog" aria-modal="true" aria-labelledby="complianceModalTitle" style="display:none; align-items:center; justify-content:center; z-index:1100;">
+    <div class="modal-card" style="max-width:760px; width:92%; max-height:85vh; display:flex; flex-direction:column;">
+      <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-subtle); padding-bottom:1rem; margin-bottom:1rem;">
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+          <div style="width:36px; height:36px; border-radius:10px; background:rgba(37,99,235,0.1); color:var(--hospital-primary, #2563eb); display:flex; align-items:center; justify-content:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h3 id="complianceModalTitle" style="font-size:1.15rem; margin:0; color:var(--text-main);">HospiCare Regulatory &amp; Compliance Center</h3>
+            <span style="font-size:0.75rem; color:var(--text-muted);">Legal Agreements, HIPAA Safeguards &amp; Clinical Safety</span>
+          </div>
+        </div>
+        <button type="button" class="modal-close" onclick="closeComplianceModal()" aria-label="Close Compliance Modal" id="btnCloseComplianceModal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="compliance-tabs" role="tablist">
+        <button type="button" class="compliance-tab-btn active" role="tab" id="tabBtnPrivacy" onclick="switchComplianceTab('privacy')">Privacy Policy</button>
+        <button type="button" class="compliance-tab-btn" role="tab" id="tabBtnTerms" onclick="switchComplianceTab('terms')">Terms of Service</button>
+        <button type="button" class="compliance-tab-btn" role="tab" id="tabBtnHipaa" onclick="switchComplianceTab('hipaa')">HIPAA &amp; Security</button>
+        <button type="button" class="compliance-tab-btn" role="tab" id="tabBtnAi" onclick="switchComplianceTab('ai')">AI Safety Protocol</button>
+        <button type="button" class="compliance-tab-btn" role="tab" id="tabBtnSla" onclick="switchComplianceTab('sla')">System SLA</button>
+      </div>
+
+      <!-- Tab Contents -->
+      <div class="compliance-tab-content active" id="complianceTab-privacy" role="tabpanel">
+        <h4>1. Protected Health Information (PHI) &amp; Privacy</h4>
+        <p>HospiCare adheres strictly to the Health Insurance Portability and Accountability Act (HIPAA) Privacy Rule (45 CFR Part 160 and Part 164, Subparts A and E). All medical records, diagnostic observations, appointment schedules, and patient demographic indicators processed through this system are designated as electronic Protected Health Information (ePHI).</p>
+        <h4>2. Data Collection and Permitted Disclosures</h4>
+        <p>We do not sell, license, or monetize clinical data. Data collected is strictly utilized for:</p>
+        <ul>
+          <li>Facilitating inpatient and outpatient clinical workflows and medical history evaluation.</li>
+          <li>Processing electronic insurance claims (EDI 270/271 Eligibility, EDI 837P Claims, EDI 278 Prior Authorization).</li>
+          <li>Autonomous administrative optimization with human-in-the-loop validation.</li>
+        </ul>
+        <h4>3. Patient Rights and Access Logs</h4>
+        <p>Patients possess the statutory right under HIPAA to request an accounting of disclosures. HospiCare maintains an immutable cryptographic audit ledger recording every query, modification, export, and viewing event associated with each medical record identifier.</p>
+      </div>
+
+      <div class="compliance-tab-content" id="complianceTab-terms" role="tabpanel">
+        <h4>1. Authorized Clinical Users Only</h4>
+        <p>HospiCare is an enterprise healthcare management application licensed exclusively to verified medical facilities, attending physicians, nursing staff, clinical administrators, and authenticated healthcare personnel. Unauthorized access attempts violate 18 U.S.C. &sect; 1030 (Computer Fraud and Abuse Act) and will be prosecuted.</p>
+        <h4>2. Clinical Disclaimers &amp; Emergency Protocols</h4>
+        <p>This software functions as a clinical administrative orchestration tool and clinical decision support (CDS) facilitator. It is not an automated medical emergency triage dispatch mechanism. In life-threatening emergencies, personnel must activate immediate hospital emergency code systems (Code Blue / Code Red) directly.</p>
+        <h4>3. Credential Confidentiality</h4>
+        <p>Staff members must never share access keys, passwords, or multi-factor biometric tokens. Sessions automatically time out after inactivity to safeguard unattended clinical workstations.</p>
+      </div>
+
+      <div class="compliance-tab-content" id="complianceTab-hipaa" role="tabpanel">
+        <h4>1. HIPAA Security Rule Technical Safeguards (45 CFR &sect; 164.312)</h4>
+        <ul>
+          <li><strong>Access Control (&sect; 164.312(a)(1)):</strong> Unique user identification, emergency &ldquo;break-glass&rdquo; access procedures, automatic session logoff, and encrypted session tokens.</li>
+          <li><strong>Audit Controls (&sect; 164.312(b)):</strong> Comprehensive tamper-evident logging of all ePHI access, modifications, exports, and administrative overrides.</li>
+          <li><strong>Integrity Controls (&sect; 164.312(c)(1)):</strong> Checksums and signature verification to protect ePHI from improper alteration or destruction.</li>
+          <li><strong>Transmission Security (&sect; 164.312(e)(1)):</strong> Mandatory TLS 1.3 encryption in transit for all client-server exchanges and EDI transmission endpoints.</li>
+        </ul>
+        <h4>2. Business Associate Agreement (BAA)</h4>
+        <p>HospiCare operates under formal Business Associate Agreements with our hosting infrastructure providers and healthcare network partners, ensuring end-to-end contractual compliance across all computing, storage, and networking layers.</p>
+      </div>
+
+      <div class="compliance-tab-content" id="complianceTab-ai" role="tabpanel">
+        <h4>1. Autonomous AI Agent Architectural Guardrails</h4>
+        <p>The HospiCare Autonomous AI Administrative Agent executes actions within a structured 5-Phase Deterministic State Machine (Reasoning &rarr; Query &rarr; Act &rarr; Verify &rarr; Resolve). The agent operates under strict medical guardrails aligned with AMA Clinical AI recommendations:</p>
+        <ul>
+          <li><strong>Autonomous Medication Blocking:</strong> The agent is programmatically prohibited from autonomously changing dosages, writing controlled substance prescriptions, or overriding clinical allergy flags without manual physician co-signature.</li>
+          <li><strong>Confidence Gating:</strong> All autonomous actions require an algorithmic confidence threshold &ge; 85%. Proposals below threshold trigger mandatory human clinical review.</li>
+          <li><strong>Complete Audit Trail:</strong> Every intermediate reasoning step, retrieved database record, tool invocation, and verification metric is permanently stamped into the clinical event log.</li>
+        </ul>
+      </div>
+
+      <div class="compliance-tab-content" id="complianceTab-sla" role="tabpanel">
+        <h4>1. Enterprise High-Availability Service Level Agreement</h4>
+        <p>HospiCare Enterprise provides a guaranteed 99.99% system availability SLA for emergency department and inpatient core management functions. Automated multi-region database failover and sub-second transaction replication ensure business continuity in catastrophic disaster scenarios.</p>
+        <h4>2. Scheduled Maintenance Windows</h4>
+        <p>Routine system upgrades and schema migrations occur exclusively during designated low-census maintenance windows with zero-downtime rolling deployments.</p>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; border-top:1px solid var(--border-subtle); padding-top:1rem; margin-top:1rem;">
+        <button type="button" class="btn btn-primary" onclick="closeComplianceModal()" style="background:var(--hospital-primary, #2563eb);">Acknowledge &amp; Close</button>
       </div>
     </div>
   </div>

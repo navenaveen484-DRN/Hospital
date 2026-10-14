@@ -14,6 +14,8 @@ const MIME_TYPES = {
   '.jpeg': 'image/jpeg',
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
+  '.txt': 'text/plain; charset=UTF-8',
+  '.xml': 'application/xml; charset=UTF-8',
   '.woff2': 'font/woff2',
   '.woff': 'font/woff',
   '.ttf': 'font/ttf'
@@ -67,10 +69,16 @@ function handleRequest(req, res) {
   const ext = path.extname(foundFile).toLowerCase();
   const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
+  const isHtml = ext === '.html';
   res.writeHead(200, {
     'Content-Type': contentType,
-    'Cache-Control': 'public, max-age=3600',
-    'X-Content-Type-Options': 'nosniff'
+    'Cache-Control': isHtml ? 'no-cache, no-store, must-revalidate' : 'public, max-age=86400',
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'SAMEORIGIN',
+    'X-XSS-Protection': '1; mode=block',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+    'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self';"
   });
 
   const stream = fs.createReadStream(foundFile);
