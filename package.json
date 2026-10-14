@@ -4,8 +4,8 @@
   "description": "Enterprise Healthcare Administrative Agent Platform with Autonomous Execution Loop",
   "scripts": {
     "build": "node build.js",
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node local_server.js",
+    "dev": "node local_server.js"
   },
   "keywords": [
     "healthcare",
