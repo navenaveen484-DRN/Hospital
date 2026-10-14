@@ -2,10 +2,10 @@
   "name": "healthcare-administrative-agent",
   "version": "1.0.0",
   "description": "Enterprise Healthcare Administrative Agent Platform with Autonomous Execution Loop",
+  "main": "server.js",
   "scripts": {
-    "build": "node build.js",
-    "start": "node local_server.js",
-    "dev": "node local_server.js"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "keywords": [
     "healthcare",
